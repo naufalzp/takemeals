@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Product;
+use App\Models\User;
+use Illuminate\Support\Facades\Validator;
 
 class ProductController extends Controller
 {
@@ -13,7 +15,11 @@ class ProductController extends Controller
     public function index()
     {
         $products = Product::all();
-        return response()->json(['data' => $products]);
+
+        return response()->json([
+            'success' => true,
+            'data' => $products,
+        ], 200);
     }
 
     /**
@@ -21,19 +27,41 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
+        $validator = Validator::make($request->all(), [
             'user_id' => 'required',
             'name' => 'required',
             'description' => 'required',
             'type_food' => 'required',
             'price' => 'required',
+            'image' => 'required',
             'stock' => 'required',
             'expired' => 'required',
         ]);
 
+        if ($validator->fails()) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Validation failed',
+                'errors' => $validator->errors(),
+            ], 422);
+        }
+
+        $user = User::findOrFail($request->user_id);
+
+        if (!$user->is_partner) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Unauthorized',
+            ], 401);
+        }
+
         $product = Product::create($request->all());
 
-        return response()->json(['message' => 'Product created successfully', 'data' => $product], 201);
+        return response()->json([
+            'success' => true,
+            'message' => 'Product created successfully',
+            'data' => $product,
+        ], 201);
     }
 
     /**
@@ -42,7 +70,33 @@ class ProductController extends Controller
     public function show(string $id)
     {
         $product = Product::findOrFail($id);
-        return response()->json(['data' => $product]);
+
+        return response()->json([
+            'success' => true,
+            'data' => $product,
+        ], 200);
+    }
+
+    /**
+     * Display the specified resource by user.
+     */
+    public function showByUser(string $userId)
+    {
+        $user = User::findOrFail($userId);
+
+        if (!$user->is_partner) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Unauthorized',
+            ], 401);
+        }
+
+        $products = Product::where('user_id', $userId)->get();
+
+        return response()->json([
+            'success' => true,
+            'data' => $products,
+        ], 200);
     }
 
     /**
@@ -50,20 +104,42 @@ class ProductController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        $request->validate([
+        $validator = Validator::make($request->all(), [
             'user_id' => 'required',
             'name' => 'required',
             'description' => 'required',
             'type_food' => 'required',
             'price' => 'required',
+            'image' => 'required',
             'stock' => 'required',
             'expired' => 'required',
         ]);
 
+        if ($validator->fails()) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Validation failed',
+                'errors' => $validator->errors(),
+            ], 422);
+        }
+
+        $user = User::findOrFail($request->user_id);
+
+        if (!$user->is_partner) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Unauthorized',
+            ], 401);
+        }
+
         $product = Product::findOrFail($id);
         $product->update($request->all());
 
-        return response()->json(['message' => 'Product updated successfully', 'data' => $product]);
+        return response()->json([
+            'success' => true,
+            'message' => 'Product updated successfully',
+            'data' => $product,
+        ], 201);
     }
 
     /**
@@ -74,6 +150,9 @@ class ProductController extends Controller
         $product = Product::findOrFail($id);
         $product->delete();
 
-        return response()->json(['message' => 'Product deleted successfully']);
+        return response()->json([
+            'success' => true,
+            'message' => 'Product deleted successfully',
+        ], 200);
     }
 }

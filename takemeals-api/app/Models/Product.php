@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Product extends Model
 {
-    use HasFactory, SoftDeletes;
+    use HasFactory, HasFactory, SoftDeletes;
 
     protected $fillable = [
         'user_id',
@@ -16,6 +16,7 @@ class Product extends Model
         'description',
         'type_food',
         'price',
+        'image',
         'stock',
         'expired',
     ];
@@ -27,13 +28,8 @@ class Product extends Model
         return $this->belongsTo(User::class);
     }
 
-    public function carts()
+    public function orders()
     {
-        return $this->belongsToMany(Cart::class);
-    }
-
-    public function histories()
-    {
-        return $this->hasMany(History::class);
+        return $this->hasMany(Order::class);
     }
 }
