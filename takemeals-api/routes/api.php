@@ -24,7 +24,7 @@ Route::group(['prefix' => 'v1'], function () {
 
     // Product
     Route::group(['prefix' => 'products', 'middleware' => 'auth:api'], function () {
-        Route::get('/', [ProductController::class, 'index'])->name('products.index');
+        Route::get('/', [ProductController::class, 'index']);
         Route::get('/{id}', [ProductController::class, 'show'])->name('products.show');
         Route::get('/user/{userId}', [ProductController::class, 'showByUser'])->name('products.showByUser');
         Route::post('/', [ProductController::class, 'store'])->name('products.store');

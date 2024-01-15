@@ -71,4 +71,6 @@ class ImageConstant {
   static String imgSend = '$imagePath/img_send.svg';
 
   static String imageNotFound = 'assets/images/image_not_found.png';
+
+  static String imgPlus = '$imagePath/img_plus.svg';
 }

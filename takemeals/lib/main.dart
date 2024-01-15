@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-import 'package:takemeals/screens/home.dart';
-import 'package:takemeals/screens/login.dart';
+import 'package:takemeals/screens/home_screen.dart';
+import 'package:takemeals/screens/login_screen.dart';
 import 'package:takemeals/theme/theme_helper.dart';
 
 void main() {
@@ -51,6 +51,6 @@ class _CheckAuthState extends State<CheckAuth> {
 
   @override
   Widget build(BuildContext context) {
-    return isAuth ? Home() : Login();
+    return isAuth ? HomeScreen() : LoginScreen();
   }
 }

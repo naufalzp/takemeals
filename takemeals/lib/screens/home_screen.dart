@@ -3,19 +3,20 @@ import 'package:takemeals/core/app_export.dart';
 import 'package:takemeals/core/utils/size_utils.dart';
 import 'package:takemeals/network/api.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-import 'package:takemeals/screens/widgets/frametwentyseven_item_widget.dart';
-import 'package:takemeals/screens/widgets/userprofile_item_widget.dart';
+import 'package:takemeals/screens/food_details_screen.dart';
+import 'package:takemeals/screens/widgets/food_recommendatio_widget.dart';
+import 'package:takemeals/screens/widgets/partner_widget.dart';
 import 'package:takemeals/widgets/custom_search_view.dart';
 import 'package:takemeals/widgets/app_bar/appbar_leading_image.dart';
 import 'dart:convert';
-import 'login.dart';
+import 'login_screen.dart';
 
-class Home extends StatefulWidget {
+class HomeScreen extends StatefulWidget {
   @override
   _HomeState createState() => _HomeState();
 }
 
-class _HomeState extends State<Home> {
+class _HomeState extends State<HomeScreen> {
   final storage = FlutterSecureStorage();
   String name = '';
   TextEditingController searchController = TextEditingController();
@@ -51,6 +52,33 @@ class _HomeState extends State<Home> {
     }
   }
 
+  Future<List<Product>> fetchData() async {
+    try {
+      final response = await Network().getData('products');
+      if (response.statusCode == 200) {
+        final Map<String, dynamic> responseData = jsonDecode(response.body);
+        if (responseData['success']) {
+          final List<dynamic> productsData = responseData['data'];
+
+          // Convert each product data to a Product object
+          List<Product> products = productsData
+              .map((productData) => Product.fromJson(productData))
+              .toList();
+
+          return products;
+        } else {
+          throw Exception('Failed to load products');
+        }
+      } else {
+        throw Exception('Failed to load products');
+      }
+    } catch (e) {
+      // Handle errors
+      print("Error fetching data: $e");
+      throw e; // Rethrow the exception so it can be caught in the FutureBuilder
+    }
+  }
+
   void _onItemTapped(int index) {
     setState(() {
       _selectedIndex = index;
@@ -74,11 +102,11 @@ class _HomeState extends State<Home> {
             text: TextSpan(
               children: [
                 TextSpan(
-                  text: "Semarang, ",
+                  text: name,
                   style: CustomTextStyles.titleMediumff232323,
                 ),
                 TextSpan(
-                  text: "Indonesia",
+                  text: ", Indonesia",
                   style: CustomTextStyles.titleMedium3f232323,
                 ),
               ],
@@ -107,6 +135,7 @@ class _HomeState extends State<Home> {
               Padding(
                 padding: EdgeInsets.symmetric(horizontal: 31),
                 child: CustomSearchView(
+                  autofocus: false,
                   controller: searchController,
                   hintText: "What whould you like?",
                 ),
@@ -134,7 +163,7 @@ class _HomeState extends State<Home> {
                 ),
               ),
               SizedBox(height: 6),
-              _buildFrameTwentySeven(context),
+              _buildPartner(context),
               SizedBox(height: 19),
               Align(
                 alignment: Alignment.centerLeft,
@@ -147,7 +176,24 @@ class _HomeState extends State<Home> {
                 ),
               ),
               SizedBox(height: 8),
-              _buildUserProfile(context),
+              FutureBuilder(
+                future:
+                    fetchData(), // Call fetchData to get the list of products
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return CircularProgressIndicator();
+                  } else if (snapshot.hasError) {
+                    return Text('Error: ${snapshot.error}');
+                  } else {
+                    // Use the List of Product objects from the snapshot
+                    List<Product> products = snapshot.data as List<Product>;
+
+                    // Call the _buildFoodRecommendation method with the list of products
+                    return _buildFoodRecommendation(context, products);
+                  }
+                },
+              ),
+              SizedBox(height: 24),
             ],
           ),
         ),
@@ -213,7 +259,7 @@ class _HomeState extends State<Home> {
   // }
 
   /// Section Widget
-  Widget _buildFrameTwentySeven(BuildContext context) {
+  Widget _buildPartner(BuildContext context) {
     return Align(
       alignment: Alignment.centerRight,
       child: SizedBox(
@@ -231,7 +277,7 @@ class _HomeState extends State<Home> {
           },
           itemCount: 5,
           itemBuilder: (context, index) {
-            return FrametwentysevenItemWidget();
+            return PartnerWidget();
           },
         ),
       ),
@@ -239,27 +285,40 @@ class _HomeState extends State<Home> {
   }
 
   /// Section Widget
-  Widget _buildUserProfile(BuildContext context) {
+  Widget _buildFoodRecommendation(
+      BuildContext context, List<Product> products) {
     return Align(
       alignment: Alignment.centerRight,
       child: Container(
-        height: 242,
+        height: 250,
         padding: EdgeInsets.symmetric(vertical: 1),
         decoration: AppDecoration.fillOnPrimaryContainer,
         child: ListView.separated(
           padding: EdgeInsets.only(left: 31),
           scrollDirection: Axis.horizontal,
-          separatorBuilder: (
-            context,
-            index,
-          ) {
+          separatorBuilder: (context, index) {
             return SizedBox(
               width: 25,
             );
           },
-          itemCount: 3,
+          itemCount: products.length,
           itemBuilder: (context, index) {
-            return UserprofileItemWidget();
+            // Pass the current product to FoodRecommendationWidget
+            return GestureDetector(
+              onTap: () {
+                // Navigate to FoodDetailsScreen with the selected product
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => FoodDetailsScreen(
+                      product: products[index],
+                    ),
+                  ),
+                );
+              },
+              child: FoodRecommendationWidget(product: products[index]),
+            );
+            ;
           },
         ),
       ),
@@ -297,14 +356,17 @@ class _HomeState extends State<Home> {
   void logout() async {
     String? token = await storage.read(key: 'token');
     var res = await Network().auth(token, 'logout');
-    var body = jsonDecode(res.body ?? '{}');
+    // var body = jsonDecode(res.body ?? '{}');
     if (res.statusCode == 200) {
       // Flutter Secure Storage
       await storage.delete(key: "user");
       await storage.delete(key: "token");
 
-      Navigator.pushAndRemoveUntil(context,
-          MaterialPageRoute(builder: (context) => Login()), (route) => false);
+      Navigator.pushAndRemoveUntil(
+        context,
+        MaterialPageRoute(builder: (context) => LoginScreen()),
+        (route) => false,
+      );
     }
   }
 }

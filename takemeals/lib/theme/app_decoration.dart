@@ -63,6 +63,10 @@ class AppDecoration {
 }
 
 class BorderRadiusStyle {
+  // Circle borders
+  static BorderRadius get circleBorder20 => BorderRadius.circular(
+        20,
+      );
   // Custom borders
   static BorderRadius get customBorderTL15 => BorderRadius.vertical(
         top: Radius.circular(15),

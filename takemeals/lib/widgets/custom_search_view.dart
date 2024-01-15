@@ -95,7 +95,7 @@ class CustomSearchView extends StatelessWidget {
           decoration: decoration,
           validator: validator,
           onChanged: (String value) {
-            onChanged!.call(value);
+            onChanged?.call(value);
           },
         ),
       );

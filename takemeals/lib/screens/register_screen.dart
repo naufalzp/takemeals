@@ -2,18 +2,18 @@ import 'package:flutter/material.dart';
 import 'package:takemeals/core/app_export.dart';
 import 'package:takemeals/widgets/custom_elevated_button.dart';
 import 'package:takemeals/widgets/custom_text_form_field.dart';
-import 'login.dart';
+import 'login_screen.dart';
 import 'package:takemeals/network/api.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'dart:convert';
-import 'home.dart';
+import 'home_screen.dart';
 
-class Register extends StatefulWidget {
+class RegisterScreen extends StatefulWidget {
   @override
   _RegisterState createState() => _RegisterState();
 }
 
-class _RegisterState extends State<Register> {
+class _RegisterState extends State<RegisterScreen> {
   final storage = FlutterSecureStorage();
   final _formKey = GlobalKey<FormState>();
   final _scaffoldKey = GlobalKey<ScaffoldState>();
@@ -192,7 +192,7 @@ class _RegisterState extends State<Register> {
                             Navigator.push(
                                 context,
                                 new MaterialPageRoute(
-                                    builder: (context) => Login()));
+                                    builder: (context) => LoginScreen()));
                           },
                           child: Text(
                             'Login',
@@ -232,7 +232,7 @@ class _RegisterState extends State<Register> {
 
       Navigator.pushReplacement(
         context,
-        new MaterialPageRoute(builder: (context) => Home()),
+        new MaterialPageRoute(builder: (context) => HomeScreen()),
       );
     } else {
       if (body['message'] != null && body['message'] is Map) {

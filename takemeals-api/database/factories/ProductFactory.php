@@ -28,7 +28,7 @@ class ProductFactory extends Factory
             'price' => fake()->numberBetween(5000, 50000),
             'image' => fake()->imageUrl(640, 480, 'food', true),
             'stock' => fake()->numberBetween(1, 20),
-            'expired' => fake()->dateTimeBetween('now', '+1 days'),
+            'expired' => fake()->numberBetween(1, 10),
         ];
     }
 }

@@ -16,9 +16,9 @@ return new class extends Migration {
             $table->string('name');
             $table->string('description');
             $table->string('type_food');
-            $table->decimal('price', 10, 2);
+            $table->double('price');
             $table->integer('stock');
-            $table->timestamp('expired');
+            $table->integer('expired');
             $table->timestamps();
             $table->softDeletes();
         });

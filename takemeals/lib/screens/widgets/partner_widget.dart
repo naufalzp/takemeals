@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:takemeals/core/app_export.dart';
 
 // ignore: must_be_immutable
-class FrametwentysevenItemWidget extends StatelessWidget {
-  const FrametwentysevenItemWidget({Key? key})
+class PartnerWidget extends StatelessWidget {
+  const PartnerWidget({Key? key})
       : super(
           key: key,
         );

@@ -3,17 +3,17 @@ import 'package:takemeals/network/api.dart';
 import 'package:takemeals/core/app_export.dart';
 import 'package:takemeals/widgets/custom_elevated_button.dart';
 import 'package:takemeals/widgets/custom_text_form_field.dart';
-import 'register.dart';
+import 'register_screen.dart';
 import 'dart:convert';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-import 'home.dart';
+import 'home_screen.dart';
 
-class Login extends StatefulWidget {
+class LoginScreen extends StatefulWidget {
   @override
   _LoginState createState() => _LoginState();
 }
 
-class _LoginState extends State<Login> {
+class _LoginState extends State<LoginScreen> {
   final storage = FlutterSecureStorage();
   final _formKey = GlobalKey<FormState>();
   final _scaffoldKey = GlobalKey<ScaffoldState>();
@@ -128,7 +128,7 @@ class _LoginState extends State<Login> {
                             Navigator.push(
                                 context,
                                 new MaterialPageRoute(
-                                    builder: (context) => Register()));
+                                    builder: (context) => RegisterScreen()));
                           },
                           child: Text(
                             'Register',
@@ -169,7 +169,7 @@ class _LoginState extends State<Login> {
 
       Navigator.pushReplacement(
         context,
-        new MaterialPageRoute(builder: (context) => Home()),
+        new MaterialPageRoute(builder: (context) => HomeScreen()),
       );
     } else {
       _showMsg(body['message']);
