@@ -1,15 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:takemeals/core/app_export.dart';
-import 'package:takemeals/core/utils/size_utils.dart';
 import 'package:takemeals/network/api.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:takemeals/screens/food_details_screen.dart';
 import 'package:takemeals/screens/widgets/food_recommendatio_widget.dart';
 import 'package:takemeals/screens/widgets/partner_widget.dart';
-import 'package:takemeals/widgets/custom_search_view.dart';
-import 'package:takemeals/widgets/app_bar/appbar_leading_image.dart';
+
 import 'dart:convert';
 import 'login_screen.dart';
+import 'package:geocoding/geocoding.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -21,32 +22,32 @@ class _HomeState extends State<HomeScreen> {
   String name = '';
   TextEditingController searchController = TextEditingController();
   int _selectedIndex = 0;
+  Future<List<Product>>? _fetchDataFuture;
+  LocationPermission _locationPermission = LocationPermission.denied;
+
   @override
   void initState() {
     super.initState();
     _loadUserData();
+    _loadLocationPermission();
+    _fetchDataFuture = fetchData();
   }
 
   _loadUserData() async {
     var userJson = await storage.read(key: 'user');
 
     if (userJson != null) {
-      // Check if userJson is not null before decoding
       try {
         Map<String, dynamic> user = jsonDecode(userJson);
 
-        // Check if the 'name' key exists in the decoded map
         if (user.containsKey('name')) {
           setState(() {
             name = user['name'];
           });
         } else {
-          // Handle the case where the 'name' key is missing
-          // You might want to provide a default value or handle it differently
           print("Error: 'name' key is missing in user data");
         }
       } catch (e) {
-        // Handle JSON decoding errors
         print("Error decoding JSON: $e");
       }
     }
@@ -79,6 +80,43 @@ class _HomeState extends State<HomeScreen> {
     }
   }
 
+  _loadLocationPermission() async {
+    // Load the stored location permission status
+    String? storedPermission =
+        await storage.read(key: 'locationPermissionGranted');
+
+    if (storedPermission != null && storedPermission == 'true') {
+      // If permission was granted previously, set the location permission to granted
+      setState(() {
+        _locationPermission = LocationPermission.always;
+      });
+    }
+  }
+
+  bool get _hasLocationPermission {
+    // Check if location permission is granted
+    return _locationPermission == LocationPermission.always ||
+        _locationPermission == LocationPermission.whileInUse;
+  }
+
+  void _requestLocationPermission() async {
+    if (_locationPermission == LocationPermission.denied) {
+      _locationPermission = await Geolocator.requestPermission();
+    }
+
+    setState(() {});
+
+    if (_locationPermission == LocationPermission.always ||
+        _locationPermission == LocationPermission.whileInUse) {
+      print("Location permission granted");
+
+      // Save the location permission status locally using Flutter Secure Storage
+      await storage.write(key: 'locationPermissionGranted', value: 'true');
+    } else {
+      print("Location permission denied");
+    }
+  }
+
   void _onItemTapped(int index) {
     setState(() {
       _selectedIndex = index;
@@ -94,26 +132,11 @@ class _HomeState extends State<HomeScreen> {
         leading: IconButton(
           padding: EdgeInsets.only(left: 31, top: 19, bottom: 22),
           icon: Icon(Icons.location_on),
-          onPressed: () {},
+          onPressed: () {
+            _requestLocationPermission();
+          },
         ),
-        title: Padding(
-          padding: EdgeInsets.only(left: 2),
-          child: RichText(
-            text: TextSpan(
-              children: [
-                TextSpan(
-                  text: name,
-                  style: CustomTextStyles.titleMediumff232323,
-                ),
-                TextSpan(
-                  text: ", Indonesia",
-                  style: CustomTextStyles.titleMedium3f232323,
-                ),
-              ],
-            ),
-            textAlign: TextAlign.left,
-          ),
-        ),
+        title: _buildTitle(),
         automaticallyImplyLeading: false,
         actions: [
           IconButton(
@@ -132,15 +155,6 @@ class _HomeState extends State<HomeScreen> {
         child: SingleChildScrollView(
           child: Column(
             children: [
-              Padding(
-                padding: EdgeInsets.symmetric(horizontal: 31),
-                child: CustomSearchView(
-                  autofocus: false,
-                  controller: searchController,
-                  hintText: "What whould you like?",
-                ),
-              ),
-              SizedBox(height: 32),
               Container(
                 height: 136,
                 width: 350,
@@ -151,6 +165,8 @@ class _HomeState extends State<HomeScreen> {
                   ),
                 ),
               ),
+              SizedBox(height: 32),
+              _buildSearchBar(context),
               SizedBox(height: 24),
               Align(
                 alignment: Alignment.centerLeft,
@@ -177,13 +193,19 @@ class _HomeState extends State<HomeScreen> {
               ),
               SizedBox(height: 8),
               FutureBuilder(
-                future:
-                    fetchData(), // Call fetchData to get the list of products
+                future: _fetchDataFuture,
                 builder: (context, snapshot) {
                   if (snapshot.connectionState == ConnectionState.waiting) {
                     return CircularProgressIndicator();
                   } else if (snapshot.hasError) {
-                    return Text('Error: ${snapshot.error}');
+                    return ElevatedButton(
+                      onPressed: () {
+                        setState(() {
+                          _fetchDataFuture = fetchData();
+                        });
+                      },
+                      child: Text('Retry', style: TextStyle(fontSize: 20)),
+                    );
                   } else {
                     // Use the List of Product objects from the snapshot
                     List<Product> products = snapshot.data as List<Product>;
@@ -202,19 +224,39 @@ class _HomeState extends State<HomeScreen> {
         type: BottomNavigationBarType.fixed,
         items: <BottomNavigationBarItem>[
           BottomNavigationBarItem(
-            icon: Icon(Icons.home),
+            icon: SvgPicture.asset(
+              ImageConstant.homeFill,
+              width: 24,
+              height: 24,
+              color: _selectedIndex == 0 ? theme.colorScheme.primary : null,
+            ),
             label: 'Home',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.list),
+            icon: SvgPicture.asset(
+              ImageConstant.dataCheck,
+              width: 24,
+              height: 24,
+              color: _selectedIndex == 1 ? theme.colorScheme.primary : null,
+            ),
             label: 'History',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.people),
+            icon: SvgPicture.asset(
+              ImageConstant.crowdSourceFill,
+              width: 24,
+              height: 24,
+              color: _selectedIndex == 2 ? theme.colorScheme.primary : null,
+            ),
             label: 'Partner',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.manage_accounts),
+            icon: SvgPicture.asset(
+              ImageConstant.personFill,
+              width: 24,
+              height: 24,
+              color: _selectedIndex == 3 ? theme.colorScheme.primary : null,
+            ),
             label: 'Account',
           ),
         ],
@@ -225,38 +267,99 @@ class _HomeState extends State<HomeScreen> {
     );
   }
 
-  /// Section Widget
-  // PreferredSizeWidget _buildAppBar(BuildContext context) {
-  //   return CustomAppBar(
-  //     leadingWidth: 43,
-  //     leading: AppbarLeadingImage(
-  //       imagePath: ImageConstant.imgLinkedin,
-  //       margin: EdgeInsets.only(
-  //         left: 31,
-  //         top: 19,
-  //         bottom: 21,
-  //       ),
-  //     ),
-  //     title: Padding(
-  //       padding: EdgeInsets.only(left: 8),
-  //       child: RichText(
-  //         text: TextSpan(
-  //           children: [
-  //             TextSpan(
-  //               text: "Semarang, ",
-  //               style: CustomTextStyles.titleMediumff232323,
-  //             ),
-  //             TextSpan(
-  //               text: "Indonesia",
-  //               style: CustomTextStyles.titleMedium3f232323,
-  //             ),
-  //           ],
-  //         ),
-  //         textAlign: TextAlign.left,
-  //       ),
-  //     ),
-  //   );
-  // }
+  Widget _buildTitle() {
+    if (_hasLocationPermission) {
+      return FutureBuilder<List<Placemark>>(
+        future: _getPlacemarks(),
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            // return skeleton
+            return CircularProgressIndicator();
+          } else if (snapshot.hasError) {
+            print("Error getting location: ${snapshot.error}");
+            return Text('Error: ${snapshot.error}');
+          } else if (snapshot.hasData && snapshot.data!.isNotEmpty) {
+            String city = snapshot.data![0].locality ?? 'Unknown City';
+
+            return RichText(
+              text: TextSpan(
+                children: [
+                  TextSpan(
+                    text: city,
+                    style: CustomTextStyles.titleMediumff232323,
+                  ),
+                ],
+              ),
+              textAlign: TextAlign.left,
+            );
+          } else {
+            return Text('Unable to get location');
+          }
+        },
+      );
+    } else {
+      return RichText(
+        text: TextSpan(
+          text: 'Hi, $name',
+          style: CustomTextStyles.titleMediumff232323,
+        ),
+        textAlign: TextAlign.left,
+      );
+    }
+  }
+
+  Future<List<Placemark>> _getPlacemarks() async {
+    Position position = await Geolocator.getCurrentPosition(
+        desiredAccuracy: LocationAccuracy.high);
+    return await placemarkFromCoordinates(
+        position.latitude, position.longitude);
+  }
+
+  Widget _buildSearchBar(BuildContext context) {
+    return Column(
+      children: [
+        Container(
+          width: 350,
+          height: 48,
+          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+          decoration: ShapeDecoration(
+            color: Color(0xFFF0F0F0),
+            shape: RoundedRectangleBorder(
+              side: BorderSide(
+                width: 1,
+                color: Colors.black.withOpacity(0.05000000074505806),
+              ),
+              borderRadius: BorderRadius.circular(25),
+            ),
+          ),
+          child: const Row(
+            mainAxisSize: MainAxisSize.min,
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              SizedBox(width: 5),
+              Icon(
+                Icons.search_rounded,
+                color: Color.fromARGB(99, 35, 35, 35),
+                size: 25,
+              ),
+              SizedBox(width: 5),
+              Text(
+                'What whould you like?',
+                style: TextStyle(
+                  color: Color(0x3F232323),
+                  fontSize: 14,
+                  fontFamily: 'Poppins',
+                  fontWeight: FontWeight.w500,
+                  height: 0.11,
+                ),
+              ),
+            ],
+          ),
+        ),
+      ],
+    );
+  }
 
   /// Section Widget
   Widget _buildPartner(BuildContext context) {
@@ -301,12 +404,10 @@ class _HomeState extends State<HomeScreen> {
               width: 25,
             );
           },
-          itemCount: products.length,
+          itemCount: products.length > 5 ? 5 : products.length,
           itemBuilder: (context, index) {
-            // Pass the current product to FoodRecommendationWidget
             return GestureDetector(
               onTap: () {
-                // Navigate to FoodDetailsScreen with the selected product
                 Navigator.push(
                   context,
                   MaterialPageRoute(
@@ -318,7 +419,6 @@ class _HomeState extends State<HomeScreen> {
               },
               child: FoodRecommendationWidget(product: products[index]),
             );
-            ;
           },
         ),
       ),

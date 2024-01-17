@@ -73,4 +73,14 @@ class ImageConstant {
   static String imageNotFound = 'assets/images/image_not_found.png';
 
   static String imgPlus = '$imagePath/img_plus.svg';
+
+  static String homeFill = '$imagePath/home_fill.svg';
+
+  static String dataCheck = '$imagePath/data_check.svg';
+
+  static String crowdSourceFill = '$imagePath/crowdsource_fill.svg';
+
+  static String personFill = '$imagePath/person_fill.svg';
+
+  static String pickUp = '$imagePath/pick_up.svg';
 }

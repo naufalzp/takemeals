@@ -102,7 +102,7 @@ class CustomTextStyles {
         color: theme.colorScheme.onPrimary.withOpacity(0.75),
       );
   static get titleSmallOnPrimary_1 => theme.textTheme.titleSmall!.copyWith(
-        color: theme.colorScheme.onPrimary.withOpacity(0.75),
+        color: theme.colorScheme.onPrimary.withOpacity(0.5),
       );
   static get titleSmallOnPrimary_2 => theme.textTheme.titleSmall!.copyWith(
         color: theme.colorScheme.onPrimary,
@@ -112,6 +112,9 @@ class CustomTextStyles {
       );
   static get titleSmallPrimary => theme.textTheme.titleSmall!.copyWith(
         color: theme.colorScheme.primary,
+      );
+  static get titleSmallPrimary_2 => theme.textTheme.titleSmall!.copyWith(
+        color: Color(0XFF232323),
       );
 }
 

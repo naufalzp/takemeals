@@ -1,5 +1,7 @@
 import 'package:intl/intl.dart';
+import 'package:takemeals/screens/detail_payment_screen.dart';
 import 'package:takemeals/screens/widgets/food_recommendatio_widget.dart';
+import 'package:takemeals/widgets/custom_icon_button.dart';
 
 import './widgets/twelve_item_widget.dart';
 import 'package:carousel_slider/carousel_slider.dart';
@@ -12,148 +14,379 @@ import 'package:takemeals/widgets/app_bar/custom_app_bar.dart';
 import 'package:takemeals/widgets/custom_elevated_button.dart';
 
 // ignore_for_file: must_be_immutable
-class FoodDetailsScreen extends StatelessWidget {
+class FoodDetailsScreen extends StatefulWidget {
   final Product product;
 
   FoodDetailsScreen({required this.product, Key? key}) : super(key: key);
 
+  @override
+  State<FoodDetailsScreen> createState() => _FoodDetailsScreenState();
+}
+
+class _FoodDetailsScreenState extends State<FoodDetailsScreen> {
   int sliderIndex = 1;
+
+  int quantity = 1;
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        body: SizedBox(
-          width: 412,
-          child: SingleChildScrollView(
-            child: SizedBox(
-              height: 850,
-              width: 412,
-              child: Stack(
-                alignment: Alignment.bottomCenter,
-                children: [
-                  _buildTraditionalNasSection(context),
-                  Align(
-                    alignment: Alignment.bottomCenter,
-                    child: Container(
-                      padding:
-                          EdgeInsets.symmetric(horizontal: 24, vertical: 10),
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadiusStyle.roundedBorder35),
-                      child: Column(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          SizedBox(height: 26),
-                          _buildFrameThirtyEightSection(context),
-                          SizedBox(height: 6),
-                          Align(
-                            alignment: Alignment.centerLeft,
-                            child: Padding(
-                              padding: EdgeInsets.only(left: 4),
-                              child: Row(
-                                children: [
-                                  SizedBox(
-                                    width: 49,
-                                    child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        CustomImageView(
-                                          imagePath:
-                                              ImageConstant.imgSignalAmber600,
-                                          height: 16,
-                                          width: 17,
-                                          margin: EdgeInsets.only(
-                                              top: 2, bottom: 1),
-                                        ),
-                                        Text("4.3",
-                                            style: theme.textTheme.titleSmall)
-                                      ],
-                                    ),
-                                  ),
-                                  CustomImageView(
-                                    imagePath: ImageConstant.imgCart,
-                                    height: 16,
-                                    width: 15,
-                                    margin: EdgeInsets.only(
-                                        left: 24, top: 2, bottom: 2),
-                                  ),
-                                  Padding(
-                                    padding: EdgeInsets.only(left: 10),
-                                    child: Text("sold 4 pcs",
-                                        style: theme.textTheme.titleSmall),
-                                  )
-                                ],
-                              ),
+    return Scaffold(
+      body: SafeArea(
+        child: Column(
+          children: [
+            _buildImageSection(context),
+            _buildRoundedTopContainer(context),
+          ],
+        ),
+      ),
+      bottomNavigationBar: _buildOrderButton(context),
+    );
+  }
+
+  Widget _buildOrderButton(BuildContext context) {
+    return Material(
+      elevation: 8,
+      child: Container(
+        padding: EdgeInsets.fromLTRB(24, 9, 24, 10),
+        decoration: AppDecoration.outlineBlack9001,
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Container(
+                  width: 150,
+                  margin: EdgeInsets.symmetric(vertical: 4),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadiusStyle.circleBorder20,
+                  ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      IconButton(
+                        onPressed: () {
+                          if (quantity > 1) {
+                            setState(() {
+                              quantity--;
+                            });
+                          }
+                        },
+                        icon: Container(
+                          decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            border: Border.all(
+                              color: appTheme.gray600.withOpacity(0.5),
+                              width: 1.0,
                             ),
                           ),
-                          SizedBox(height: 12),
-                          Align(
-                            alignment: Alignment.centerLeft,
-                            child: Container(
-                              width: 331,
-                              margin: EdgeInsets.only(left: 4, right: 28),
-                              child: Text(
-                                product.description,
-                                maxLines: 3,
-                                overflow: TextOverflow.ellipsis,
-                                style: CustomTextStyles.titleSmallOnPrimary_3
-                                    .copyWith(height: 1.29),
-                              ),
+                          child: CircleAvatar(
+                            backgroundColor: Colors.white,
+                            child: Icon(
+                              Icons.remove,
+                              color: Colors.red,
                             ),
                           ),
-                          SizedBox(height: 12),
-                          _buildFrameSection(context),
-                          SizedBox(height: 16),
-                          CustomElevatedButton(
-                            text: "Add to cart",
-                            margin: EdgeInsets.symmetric(horizontal: 7),
-                          ),
-                          SizedBox(height: 63),
-                          SizedBox(width: 108, child: Divider())
-                        ],
+                        ),
                       ),
-                    ),
+                      SizedBox(
+                        child: Text(
+                          quantity.toString(),
+                          style: CustomTextStyles.titleLargeSemiBold,
+                        ),
+                      ),
+                      IconButton(
+                        onPressed: () {
+                          if (quantity < widget.product.stock) {
+                            setState(() {
+                              quantity++;
+                            });
+                          }
+                        },
+                        icon: Container(
+                          decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            border: Border.all(
+                              color: appTheme.gray600.withOpacity(0.5),
+                              width: 1.0, // Adjust the border width as needed
+                            ),
+                          ),
+                          child: CircleAvatar(
+                            backgroundColor: Colors.white,
+                            child: Icon(
+                              Icons.add,
+                              color: Colors.green,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                CustomElevatedButton(
+                  height: 48,
+                  width: 175,
+                  text: "Order",
+                  buttonStyle: CustomButtonStyles.fillPrimary,
+                  buttonTextStyle:
+                      CustomTextStyles.titleMediumOnPrimary.copyWith(
+                    color: Colors.black,
+                  ),
+                  onPressed: () {
+                    // Navigate to DetailPaymentScreen with the ordered data
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => DetailPaymentScreen(
+                          product: widget.product,
+                          quantity: quantity,
+                        ),
+                      ),
+                    );
+                  },
+                ),
+              ],
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildRoundedTopContainer(BuildContext context) {
+    double screenHeight = MediaQuery.of(context).size.height;
+    double remainingHeight = screenHeight - MediaQuery.of(context).padding.top;
+
+    return Transform.translate(
+      offset: Offset(0.0, -20.0),
+      child: Container(
+        height: remainingHeight * 0.545,
+        decoration: const BoxDecoration(
+          color: Colors.white, // Replace with your desired color
+          borderRadius: BorderRadius.only(
+            topLeft: Radius.circular(20.0),
+            topRight: Radius.circular(20.0),
+          ),
+        ),
+        child: Padding(
+          padding: const EdgeInsets.only(right: 25.0, left: 25.0, top: 25.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    widget.product.name,
+                    style: theme.textTheme.titleLarge,
                   ),
                 ],
               ),
-            ),
+              SizedBox(height: 8),
+              Row(
+                children: [
+                  Row(
+                    children: [
+                      Icon(
+                        Icons.shopping_cart,
+                        color: Colors.green,
+                      ),
+                      Text(
+                        'sold 4 pcs',
+                        style: CustomTextStyles.titleSmallPrimary_2,
+                      )
+                    ],
+                  ),
+                  SizedBox(
+                    width: 10,
+                  ),
+                  Row(
+                    children: [
+                      Icon(
+                        Icons.pin_drop_rounded,
+                        color: Colors.orange,
+                      ),
+                      Text(
+                        '0.8 km',
+                        style: CustomTextStyles.titleSmallPrimary_2,
+                      )
+                    ],
+                  ),
+                ],
+              ),
+              SizedBox(height: 8),
+              Text(
+                widget.product.description,
+                maxLines: 2,
+                overflow: TextOverflow.ellipsis,
+                style: CustomTextStyles.titleSmallOnPrimary_1.copyWith(
+                  height: 1.29,
+                ),
+              ),
+              SizedBox(height: 8),
+              Text(
+                NumberFormat.currency(
+                  locale: 'id',
+                  symbol: 'Rp',
+                  decimalDigits: 0,
+                ).format(widget.product.price),
+                style: theme.textTheme.titleLarge,
+              ),
+              SizedBox(height: 16),
+              Divider(
+                color: Colors.black.withOpacity(0.5),
+                thickness: 1,
+              ),
+              SizedBox(height: 16),
+              _buildDataSection('Type', widget.product.typeFood),
+              SizedBox(height: 8),
+              _buildDataSection('Stock', widget.product.stock.toString()),
+              SizedBox(height: 8),
+              _buildDataSection(
+                  'Expired', '${widget.product.expired.toString()} hours'),
+              SizedBox(height: 8),
+              _buildDataSection(
+                  'Location', 'Jl. Avidya, No 10, Semarang Tengah, Semarang.'),
+              SizedBox(height: 8),
+              _buildDataSection('Pick Up', 'Today, 19.00 - 22.00'),
+            ],
           ),
         ),
       ),
     );
   }
 
+  Widget _buildDataSection(String label, String value) {
+    if (label == 'Location') {
+      List<String> lines = [];
+      List<String> words = value.split(' ');
+
+      String currentLine = '';
+      for (String word in words) {
+        if ((currentLine.length + word.length) <= 20) {
+          currentLine += '$word ';
+        } else {
+          if (currentLine.isEmpty) {
+            lines.add(word);
+          } else {
+            lines.add(currentLine.trim());
+            currentLine = '$word ';
+          }
+        }
+      }
+
+      if (currentLine.isNotEmpty) {
+        lines.add(currentLine.trim());
+      }
+
+      return Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              SizedBox(
+                width: 100,
+                child: Text(
+                  label,
+                  style: theme.textTheme.titleSmall,
+                  textAlign: TextAlign.left,
+                ),
+              ),
+              SizedBox(
+                width: 10,
+                child: Text(
+                  ':',
+                  style: theme.textTheme.titleSmall,
+                  textAlign: TextAlign.left,
+                ),
+              ),
+              SizedBox(
+                width: 200,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    ...lines.map(
+                      (line) => Text(
+                        line,
+                        style: theme.textTheme.titleSmall,
+                        textAlign: TextAlign.left,
+                      ),
+                    )
+                  ],
+                ),
+              )
+            ],
+          ),
+        ],
+      );
+    } else {
+      return Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          SizedBox(
+            width: 100,
+            child: Text(
+              label,
+              style: theme.textTheme.titleSmall,
+              textAlign: TextAlign.left,
+            ),
+          ),
+          SizedBox(
+            width: 10,
+            child: Text(
+              ':',
+              style: theme.textTheme.titleSmall,
+              textAlign: TextAlign.left,
+            ),
+          ),
+          SizedBox(
+            width: 200,
+            child: Text(
+              value,
+              style: theme.textTheme.titleSmall,
+              textAlign: TextAlign.left,
+            ),
+          )
+        ],
+      );
+    }
+  }
+
   /// Section Widget
-  Widget _buildTraditionalNasSection(BuildContext context) {
+  Widget _buildImageSection(BuildContext context) {
+    double screenHeight = MediaQuery.of(context).size.height;
+    double imageHeight = screenHeight * 0.32;
     return Align(
       alignment: Alignment.topCenter,
       child: SizedBox(
-        height: 300,
-        width: 412,
+        height: imageHeight,
+        width: MediaQuery.of(context).size.width,
         child: Stack(
           alignment: Alignment.topCenter,
           children: [
             CustomImageView(
-                imagePath: product.image,
-                fit: BoxFit.cover,
-                height: 358,
-                width: 412,
-                alignment: Alignment.center),
+              imagePath: widget.product.image,
+              fit: BoxFit.cover,
+              height: 358,
+              width: 412,
+              alignment: Alignment.center,
+            ),
             Align(
               alignment: Alignment.topCenter,
               child: Container(
-                height: 271,
-                width: 350,
-                margin: EdgeInsets.only(top: 38),
+                height: imageHeight * 0.9,
+                width: MediaQuery.of(context).size.width * 0.95,
+                margin: EdgeInsets.only(top: imageHeight * 0.1),
                 child: Stack(
                   alignment: Alignment.topCenter,
                   children: [
                     Align(
                       alignment: Alignment.center,
                       child: SizedBox(
-                        height: 271,
-                        width: 350,
+                        height: imageHeight * 0.9,
+                        width: MediaQuery.of(context).size.width * 0.85,
                         child: Stack(
                           alignment: Alignment.bottomCenter,
                           children: [
@@ -199,19 +432,23 @@ class FoodDetailsScreen extends StatelessWidget {
                     CustomAppBar(
                       height: 40,
                       leadingWidth: 71,
-                      leading: AppbarLeadingIconbutton(
-                        imagePath: ImageConstant.imgArrowLeft,
-                        margin: EdgeInsets.only(left: 31),
-                        onTap: () {
-                          onTapArrowLeft(context);
-                        },
-                      ),
-                      actions: [
-                        AppbarTrailingIconbutton(
-                          imagePath: ImageConstant.imgSend,
-                          margin: EdgeInsets.symmetric(horizontal: 31),
+                      leading: CircleAvatar(
+                        backgroundColor: Colors.white.withOpacity(0.5),
+                        radius: 20,
+                        child: ClipOval(
+                          child: Material(
+                            color: Colors.transparent,
+                            child: InkWell(
+                              onTap: () => onTapArrowLeft(context),
+                              child: Icon(
+                                Icons.chevron_left_rounded,
+                                color: Colors.black.withOpacity(0.5),
+                                size: 35,
+                              ),
+                            ),
+                          ),
                         ),
-                      ],
+                      ),
                     ),
                   ],
                 ),
@@ -219,132 +456,6 @@ class FoodDetailsScreen extends StatelessWidget {
             ),
           ],
         ),
-      ),
-    );
-  }
-
-  /// Section Widget
-  Widget _buildFrameThirtyEightSection(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 4),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Text(product.name, style: theme.textTheme.titleLarge),
-          Text(
-            NumberFormat.currency(
-              locale: 'id', // 'id' is the locale code for Indonesia
-              symbol: 'Rp',
-            ).format(product.price),
-            style: theme.textTheme.titleLarge,
-          )
-        ],
-      ),
-    );
-  }
-
-  /// Section Widget
-  Widget _buildFrameSection(BuildContext context) {
-    return Container(
-      padding: EdgeInsets.fromLTRB(4, 13, 4, 15),
-      decoration: AppDecoration.outlineBlack9001,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          SizedBox(height: 5),
-          Padding(
-            padding: EdgeInsets.only(right: 109),
-            child: Row(
-              children: [
-                Padding(
-                  padding: EdgeInsets.only(top: 2),
-                  child: Text("Type", style: theme.textTheme.titleSmall),
-                ),
-                Spacer(),
-                Text(":", style: CustomTextStyles.titleSmallBlack900),
-                Padding(
-                  padding: EdgeInsets.only(left: 16, bottom: 2),
-                  child:
-                      Text(product.typeFood, style: theme.textTheme.titleSmall),
-                )
-              ],
-            ),
-          ),
-          SizedBox(height: 4),
-          Padding(
-            padding: EdgeInsets.only(right: 182),
-            child: Row(
-              children: [
-                Text("Stock", style: theme.textTheme.titleSmall),
-                Spacer(),
-                Text(":", style: CustomTextStyles.titleSmallBlack900),
-                Padding(
-                  padding: EdgeInsets.only(left: 16),
-                  child: Text(product.stock.toString(),
-                      style: theme.textTheme.titleSmall),
-                )
-              ],
-            ),
-          ),
-          SizedBox(height: 8),
-          Padding(
-            padding: EdgeInsets.only(right: 160),
-            child: Row(
-              children: [
-                Text("Expired", style: theme.textTheme.titleSmall),
-                Spacer(),
-                Text(":", style: CustomTextStyles.titleSmallBlack900),
-                Padding(
-                  padding: EdgeInsets.only(left: 16),
-                  child: Text(product.expired.toString(),
-                      style: theme.textTheme.titleSmall),
-                )
-              ],
-            ),
-          ),
-          SizedBox(height: 8),
-          Padding(
-            padding: EdgeInsets.only(right: 24),
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Padding(
-                  padding: EdgeInsets.only(bottom: 23),
-                  child: Text("Location", style: theme.textTheme.titleSmall),
-                ),
-                Spacer(),
-                Padding(
-                  padding: EdgeInsets.only(bottom: 22),
-                  child: Text(":", style: CustomTextStyles.titleSmallBlack900),
-                ),
-                Container(
-                  width: 195,
-                  margin: EdgeInsets.only(left: 16),
-                  child: Text("Jl. Avidya, No 10, Semarang Tengah, Semarang.",
-                      maxLines: 2,
-                      overflow: TextOverflow.ellipsis,
-                      style: theme.textTheme.titleSmall),
-                )
-              ],
-            ),
-          ),
-          SizedBox(height: 8),
-          Padding(
-            padding: EdgeInsets.only(right: 76),
-            child: Row(
-              children: [
-                Text("Pick Up", style: theme.textTheme.titleSmall),
-                Spacer(),
-                Text(":", style: CustomTextStyles.titleSmallBlack900),
-                Padding(
-                  padding: EdgeInsets.only(left: 16, top: 2),
-                  child: Text("Today, 19.00 - 22.00",
-                      style: CustomTextStyles.titleSmallInter),
-                )
-              ],
-            ),
-          )
-        ],
       ),
     );
   }
