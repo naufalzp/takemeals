@@ -5,7 +5,7 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 class Network {
   // ganti ip sesuai dengan ip komputer
   final Uri _url =
-      Uri.parse('https://f8c1-103-144-170-142.ngrok-free.app/api/v1/');
+      Uri.parse('https://ddfc-103-246-107-2.ngrok-free.app/api/v1/');
 
   String? _token;
 

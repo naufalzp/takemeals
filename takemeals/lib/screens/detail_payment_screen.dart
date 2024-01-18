@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:intl/intl.dart';
 import 'package:takemeals/core/app_export.dart';
 import 'package:takemeals/screens/widgets/food_recommendatio_widget.dart';
 import 'package:takemeals/widgets/custom_elevated_button.dart';
@@ -148,7 +149,7 @@ Semarang''',
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Icon(
-                          Icons.directions,
+                          Icons.near_me_rounded,
                           color: Colors.black,
                         ),
                         SizedBox(width: 8),
@@ -185,6 +186,112 @@ Semarang''',
                     'Order Summary',
                     style: CustomTextStyles.titleLargeBlack900,
                   ),
+                ),
+              ),
+              SizedBox(height: 16),
+              Row(
+                children: [
+                  Container(
+                    width: 50,
+                    height: 50,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadiusStyle.circleBorder20,
+                      color: Colors.white,
+                      border: Border.all(
+                        color: Colors.black.withOpacity(0.2),
+                        width: 1,
+                      ),
+                    ),
+                    child: Align(
+                      alignment: Alignment.center,
+                      child: Text(
+                        '${quantity}x',
+                        style: CustomTextStyles.titleLargeBlack900,
+                      ),
+                    ),
+                  ),
+                  SizedBox(width: 16),
+                  Text(
+                    product.name,
+                    style: CustomTextStyles.titleMediumBlack900Bold,
+                  ),
+                  Spacer(),
+                  Text(
+                    NumberFormat.currency(
+                      locale: 'id',
+                      symbol: 'Rp ',
+                      decimalDigits: 0,
+                    ).format(product.price * quantity),
+                    style: CustomTextStyles.titleMediumBlack900Bold,
+                  ),
+                ],
+              ),
+              SizedBox(height: 16),
+              Padding(
+                padding: const EdgeInsets.only(left: 8),
+                child: Row(
+                  children: [
+                    Text(
+                      'Sub total',
+                      style: CustomTextStyles.titleSmallOnPrimary,
+                    ),
+                    Spacer(),
+                    Text(
+                      NumberFormat.currency(
+                        locale: 'id',
+                        symbol: 'Rp ',
+                        decimalDigits: 0,
+                      ).format(product.price * quantity),
+                      style: CustomTextStyles.titleSmallOnPrimary,
+                    ),
+                  ],
+                ),
+              ),
+              SizedBox(height: 8),
+              Padding(
+                padding: const EdgeInsets.only(left: 8),
+                child: Row(
+                  children: [
+                    Text(
+                      'Fee',
+                      style: CustomTextStyles.titleSmallOnPrimary,
+                    ),
+                    Spacer(),
+                    Text(
+                      NumberFormat.currency(
+                        locale: 'id',
+                        symbol: 'Rp ',
+                        decimalDigits: 0,
+                      ).format(1000),
+                      style: CustomTextStyles.titleSmallOnPrimary,
+                    ),
+                  ],
+                ),
+              ),
+              SizedBox(height: 16),
+              Divider(
+                color: Colors.black.withOpacity(0.2),
+                thickness: 1,
+              ),
+              SizedBox(height: 16),
+              Padding(
+                padding: const EdgeInsets.only(left: 8),
+                child: Row(
+                  children: [
+                    Text(
+                      'Total',
+                      style: CustomTextStyles.titleLargeBlack900,
+                    ),
+                    Spacer(),
+                    Text(
+                      NumberFormat.currency(
+                        locale: 'id',
+                        symbol: 'Rp ',
+                        decimalDigits: 0,
+                      ).format((product.price * quantity) + 1000),
+                      style: CustomTextStyles.titleLargeBlack900,
+                    ),
+                  ],
                 ),
               ),
             ],
