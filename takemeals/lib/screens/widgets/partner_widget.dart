@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:takemeals/core/app_export.dart';
+import 'package:takemeals/models/partner_model.dart';
 
 // ignore: must_be_immutable
 class PartnerWidget extends StatelessWidget {
-  const PartnerWidget({Key? key})
-      : super(
-          key: key,
-        );
+  final Partner partner;
+
+  const PartnerWidget({Key? key, required this.partner}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +28,7 @@ class PartnerWidget extends StatelessWidget {
             ),
             SizedBox(height: 6),
             Text(
-              "Partner",
+              partner.storeName,
               style: theme.textTheme.labelMedium,
             ),
           ],

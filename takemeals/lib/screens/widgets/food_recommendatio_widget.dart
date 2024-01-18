@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'dart:convert';
 import 'package:takemeals/core/app_export.dart';
-import 'package:takemeals/network/api.dart';
+import 'package:takemeals/models/product_model.dart';
 
 class FoodRecommendationWidget extends StatelessWidget {
   final Product product;
@@ -68,6 +67,8 @@ class FoodRecommendationWidget extends StatelessWidget {
               padding: EdgeInsets.only(left: 12),
               child: Text(
                 product.name,
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
                 style: CustomTextStyles.titleMediumBlack900,
               ),
             ),
@@ -116,44 +117,6 @@ class FoodRecommendationWidget extends StatelessWidget {
           ],
         ),
       ),
-    );
-  }
-}
-
-class Product {
-  final int id;
-  final int userId;
-  final String name;
-  final String description;
-  final String typeFood;
-  final double price;
-  final int stock;
-  final int expired;
-  final String image;
-
-  Product({
-    required this.id,
-    required this.userId,
-    required this.name,
-    required this.description,
-    required this.typeFood,
-    required this.price,
-    required this.stock,
-    required this.expired,
-    required this.image,
-  });
-
-  factory Product.fromJson(Map<String, dynamic> json) {
-    return Product(
-      id: json['id'],
-      userId: json['user_id'],
-      name: json['name'],
-      description: json['description'],
-      typeFood: json['type_food'],
-      price: double.parse(json['price']),
-      stock: json['stock'],
-      expired: json['expired'],
-      image: json['image'],
     );
   }
 }

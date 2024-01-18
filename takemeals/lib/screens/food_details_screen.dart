@@ -1,23 +1,25 @@
 import 'package:intl/intl.dart';
+import 'package:takemeals/models/partner_model.dart';
+import 'package:takemeals/models/product_model.dart';
 import 'package:takemeals/screens/detail_payment_screen.dart';
-import 'package:takemeals/screens/widgets/food_recommendatio_widget.dart';
-import 'package:takemeals/widgets/custom_icon_button.dart';
 
 import './widgets/twelve_item_widget.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import 'package:takemeals/core/app_export.dart';
-import 'package:takemeals/widgets/app_bar/appbar_leading_iconbutton.dart';
-import 'package:takemeals/widgets/app_bar/appbar_trailing_iconbutton.dart';
 import 'package:takemeals/widgets/app_bar/custom_app_bar.dart';
 import 'package:takemeals/widgets/custom_elevated_button.dart';
 
 // ignore_for_file: must_be_immutable
 class FoodDetailsScreen extends StatefulWidget {
   final Product product;
+  final Partner partner; // Add this line
 
-  FoodDetailsScreen({required this.product, Key? key}) : super(key: key);
+  FoodDetailsScreen({
+    required this.product,
+    required this.partner, // Add this line
+  });
 
   @override
   State<FoodDetailsScreen> createState() => _FoodDetailsScreenState();
@@ -245,10 +247,10 @@ class _FoodDetailsScreenState extends State<FoodDetailsScreen> {
               _buildDataSection(
                   'Expired', '${widget.product.expired.toString()} hours'),
               SizedBox(height: 8),
-              _buildDataSection(
-                  'Location', 'Jl. Avidya, No 10, Semarang Tengah, Semarang.'),
+              _buildDataSection('Location', '${widget.partner.address}'),
               SizedBox(height: 8),
-              _buildDataSection('Pick Up', 'Today, 19.00 - 22.00'),
+              _buildDataSection('Pick Up',
+                  'Today, ${widget.partner.openAt} - ${widget.partner.closeAt}'),
             ],
           ),
         ),

@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:takemeals/core/app_export.dart';
+import 'package:takemeals/models/partner_model.dart';
+import 'package:takemeals/models/product_model.dart';
 import 'package:takemeals/network/api.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:takemeals/screens/food_details_screen.dart';
@@ -22,15 +24,17 @@ class _HomeState extends State<HomeScreen> {
   String name = '';
   TextEditingController searchController = TextEditingController();
   int _selectedIndex = 0;
-  Future<List<Product>>? _fetchDataFuture;
   LocationPermission _locationPermission = LocationPermission.denied;
+  Future<List<Product>>? _fetchDataProductFuture;
+  Future<List<Partner>>? _fetchDataPartnerFuture;
 
   @override
   void initState() {
     super.initState();
     _loadUserData();
     _loadLocationPermission();
-    _fetchDataFuture = fetchData();
+    _fetchDataProductFuture = fetchProducts();
+    _fetchDataPartnerFuture = fetchPartners();
   }
 
   _loadUserData() async {
@@ -53,7 +57,7 @@ class _HomeState extends State<HomeScreen> {
     }
   }
 
-  Future<List<Product>> fetchData() async {
+  Future<List<Product>> fetchProducts() async {
     try {
       final response = await Network().getData('products');
       if (response.statusCode == 200) {
@@ -75,8 +79,60 @@ class _HomeState extends State<HomeScreen> {
       }
     } catch (e) {
       // Handle errors
-      print("Error fetching data: $e");
-      throw e; // Rethrow the exception so it can be caught in the FutureBuilder
+      print("Error fetching products: $e");
+      throw e;
+    }
+  }
+
+  Future<List<Partner>> fetchPartners() async {
+    try {
+      final response = await Network().getData('partners');
+      if (response.statusCode == 200) {
+        final Map<String, dynamic> responseData = jsonDecode(response.body);
+        if (responseData['success']) {
+          final List<dynamic> partnersData = responseData['data'];
+
+          // Convert each partner data to a Partner object
+          List<Partner> partners = partnersData
+              .map((partnerData) => Partner.fromJson(partnerData))
+              .toList();
+
+          return partners;
+        } else {
+          throw Exception('Failed to load partners');
+        }
+      } else {
+        throw Exception('Failed to load partners');
+      }
+    } catch (e) {
+      // Handle errors
+      print("Error fetching partners: $e");
+      throw e;
+    }
+  }
+
+  Future<Partner> fetchPartnerById(int partnerId) async {
+    try {
+      final response = await Network().getData('partners/$partnerId');
+      if (response.statusCode == 200) {
+        final Map<String, dynamic> responseData = jsonDecode(response.body);
+        if (responseData['success']) {
+          final dynamic partnerData = responseData['data'];
+
+          // Convert partner data to a Partner object
+          Partner partner = Partner.fromJson(partnerData);
+
+          return partner;
+        } else {
+          throw Exception('Failed to load partner');
+        }
+      } else {
+        throw Exception('Failed to load partner');
+      }
+    } catch (e) {
+      // Handle errors
+      print("Error fetching partner: $e");
+      throw e;
     }
   }
 
@@ -179,7 +235,27 @@ class _HomeState extends State<HomeScreen> {
                 ),
               ),
               SizedBox(height: 6),
-              _buildPartner(context),
+              FutureBuilder(
+                future: _fetchDataPartnerFuture,
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return CircularProgressIndicator();
+                  } else if (snapshot.hasError) {
+                    Future.delayed(const Duration(seconds: 5), () {
+                      setState(() {
+                        _fetchDataPartnerFuture = fetchPartners();
+                      });
+                    });
+                    return CircularProgressIndicator();
+                  } else {
+                    // Use the List of Partner objects from the snapshot
+                    List<Partner> partners = snapshot.data as List<Partner>;
+
+                    // Call the _buildFoodRecommendation method with the list of partners
+                    return _buildPartner(context, partners);
+                  }
+                },
+              ),
               SizedBox(height: 19),
               Align(
                 alignment: Alignment.centerLeft,
@@ -193,19 +269,17 @@ class _HomeState extends State<HomeScreen> {
               ),
               SizedBox(height: 8),
               FutureBuilder(
-                future: _fetchDataFuture,
+                future: _fetchDataProductFuture,
                 builder: (context, snapshot) {
                   if (snapshot.connectionState == ConnectionState.waiting) {
                     return CircularProgressIndicator();
                   } else if (snapshot.hasError) {
-                    return ElevatedButton(
-                      onPressed: () {
-                        setState(() {
-                          _fetchDataFuture = fetchData();
-                        });
-                      },
-                      child: Text('Retry', style: TextStyle(fontSize: 20)),
-                    );
+                    Future.delayed(const Duration(seconds: 5), () {
+                      setState(() {
+                        _fetchDataProductFuture = fetchProducts();
+                      });
+                    });
+                    return CircularProgressIndicator();
                   } else {
                     // Use the List of Product objects from the snapshot
                     List<Product> products = snapshot.data as List<Product>;
@@ -362,7 +436,7 @@ class _HomeState extends State<HomeScreen> {
   }
 
   /// Section Widget
-  Widget _buildPartner(BuildContext context) {
+  Widget _buildPartner(BuildContext context, List<Partner> partners) {
     return Align(
       alignment: Alignment.centerRight,
       child: SizedBox(
@@ -378,16 +452,17 @@ class _HomeState extends State<HomeScreen> {
               width: 24,
             );
           },
-          itemCount: 5,
+          itemCount: partners.length > 5 ? 5 : partners.length,
           itemBuilder: (context, index) {
-            return PartnerWidget();
+            return PartnerWidget(
+              partner: partners[index],
+            );
           },
         ),
       ),
     );
   }
 
-  /// Section Widget
   Widget _buildFoodRecommendation(
       BuildContext context, List<Product> products) {
     return Align(
@@ -408,12 +483,36 @@ class _HomeState extends State<HomeScreen> {
           itemBuilder: (context, index) {
             return GestureDetector(
               onTap: () {
+                // Use FutureBuilder to fetch partner data asynchronously
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => FoodDetailsScreen(
-                      product: products[index],
-                    ),
+                    builder: (context) {
+                      return FutureBuilder<Partner>(
+                        future: fetchPartnerById(products[index].partnerId),
+                        builder: (context, snapshot) {
+                          if (snapshot.connectionState ==
+                              ConnectionState.waiting) {
+                            // Full-screen white background with loading indicator
+                            return _buildLoadingScreen();
+                          } else if (snapshot.hasError) {
+                            _retryFetch(context, products[index]);
+                            return _buildErrorScreen();
+                          } else if (snapshot.hasData) {
+                            // Use the fetched Partner data
+                            Partner partner = snapshot.data!;
+
+                            // Pass both product and partner data to FoodDetailsScreen
+                            return FoodDetailsScreen(
+                              product: products[index],
+                              partner: partner,
+                            );
+                          } else {
+                            return Text('Failed to load partner');
+                          }
+                        },
+                      );
+                    },
                   ),
                 );
               },
@@ -422,6 +521,50 @@ class _HomeState extends State<HomeScreen> {
           },
         ),
       ),
+    );
+  }
+
+  void _retryFetch(BuildContext context, Product product) {
+    Future.delayed(const Duration(seconds: 10), () {
+      // Retry by setting the state or refetching the data
+      setState(() {
+        // You may need to reinitialize the Future or update the state accordingly
+        _fetchDataProductFuture = fetchProducts();
+      });
+    });
+  }
+
+  Widget _buildErrorScreen() {
+    return Stack(
+      children: [
+        // Full-screen white background
+        Container(
+          color: Colors.white,
+          width: double.infinity,
+          height: double.infinity,
+        ),
+        // Centered loading indicator
+        Center(
+          child: CircularProgressIndicator(),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildLoadingScreen() {
+    return Stack(
+      children: [
+        // Full-screen white background
+        Container(
+          color: Colors.white,
+          width: double.infinity,
+          height: double.infinity,
+        ),
+        // Centered loading indicator
+        Center(
+          child: CircularProgressIndicator(),
+        ),
+      ],
     );
   }
 
@@ -458,7 +601,6 @@ class _HomeState extends State<HomeScreen> {
     var res = await Network().auth(token, 'logout');
     // var body = jsonDecode(res.body ?? '{}');
     if (res.statusCode == 200) {
-      // Flutter Secure Storage
       await storage.delete(key: "user");
       await storage.delete(key: "token");
 

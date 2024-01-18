@@ -16,7 +16,6 @@ class LoginScreen extends StatefulWidget {
 class _LoginState extends State<LoginScreen> {
   final storage = FlutterSecureStorage();
   final _formKey = GlobalKey<FormState>();
-  final _scaffoldKey = GlobalKey<ScaffoldState>();
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   bool _isLoading = false;

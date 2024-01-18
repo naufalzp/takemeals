@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:takemeals/core/app_export.dart';
-import 'package:takemeals/screens/widgets/food_recommendatio_widget.dart';
+import 'package:takemeals/models/product_model.dart';
 import 'package:takemeals/widgets/custom_elevated_button.dart';
 import 'package:takemeals/widgets/custom_icon_button.dart';
 

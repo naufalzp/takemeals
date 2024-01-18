@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:intl/intl.dart';
 import 'package:takemeals/core/app_export.dart';
-import 'package:takemeals/screens/widgets/food_recommendatio_widget.dart';
+import 'package:takemeals/models/product_model.dart';
 import 'package:takemeals/widgets/custom_elevated_button.dart';
 
 class DetailPaymentScreen extends StatelessWidget {
@@ -15,11 +15,27 @@ class DetailPaymentScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Detail Payment'),
-      ),
+          title: Text('Detail Payment'),
+          leading: IconButton(
+            icon: Icon(Icons.arrow_back_ios_new),
+            onPressed: () {
+              Navigator.pop(context);
+            },
+          )),
       body: _buildBody(context),
       bottomNavigationBar: _buildPayButton(context),
     );
+  }
+
+  String limitTextToWords(String text, int maxWords) {
+    List<String> words = text.split(' ');
+
+    if (words.length <= maxWords) {
+      return text; // Return the original text if it has fewer or equal words than the limit
+    } else {
+      List<String> truncatedWords = words.sublist(0, maxWords);
+      return truncatedWords.join(' ') + '...';
+    }
   }
 
   Widget _buildBody(BuildContext context) {
@@ -212,8 +228,10 @@ Semarang''',
                   ),
                   SizedBox(width: 16),
                   Text(
-                    product.name,
+                    limitTextToWords(product.name, 2), // Limit to 2 words
                     style: CustomTextStyles.titleMediumBlack900Bold,
+                    maxLines: 2, // Adjust the number of lines as needed
+                    overflow: TextOverflow.ellipsis,
                   ),
                   Spacer(),
                   Text(
