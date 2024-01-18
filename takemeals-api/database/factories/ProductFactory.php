@@ -21,10 +21,10 @@ class ProductFactory extends Factory
         $faker->addProvider(new \FakerRestaurant\Provider\en_US\Restaurant($faker));
 
         return [
-            'user_id' => 1,
+            'partner_id' => 1,
             'name' => $faker->foodName(),
             'description' => fake()->text(),
-            'type_food' => fake()->randomElement(['food', 'drink']),
+            'type_food' => fake()->randomElement(['Makanan Berat', 'Minuman', 'Cemilan']),
             'price' => fake()->numberBetween(5000, 50000),
             'image' => fake()->imageUrl(640, 480, 'food', true),
             'stock' => fake()->numberBetween(1, 20),

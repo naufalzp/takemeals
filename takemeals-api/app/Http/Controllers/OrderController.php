@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Order;
+use App\Models\Product;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -26,7 +27,8 @@ class OrderController extends Controller
             'user_id' => 'required',
             'product_id' => 'required',
             'quantity' => 'required',
-            'total' => 'required',
+            'total_price' => 'required',
+            'payment_method' => 'required',
         ]);
 
         if ($validator->fails()) {
@@ -37,9 +39,25 @@ class OrderController extends Controller
             ], 422);
         }
 
-        $order = Order::create($request->all(), [
-            'status' => 'pending',
-        ]);
+        $order = Order::create(array_merge($request->all(), ['status' => 'pending']));
+
+        $product = Product::findOrFail($request->product_id);
+
+        if (!$order || !$product) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Order failed to create',
+            ], 500);
+        }
+
+
+        $product->stock -= $request->quantity;
+        $product->save();
+
+        if ($product->stock == 0) {
+            $product->delete();
+        }
+
 
         return response()->json([
             'success' => true,
@@ -79,7 +97,7 @@ class OrderController extends Controller
             'user_id' => 'required',
             'product_id' => 'required',
             'quantity' => 'required',
-            'total' => 'required',
+            'total_price' => 'required',
             'status' => 'required',
             'payment_method' => 'required',
         ]);
@@ -93,6 +111,13 @@ class OrderController extends Controller
         }
 
         $order = Order::findOrFail($id);
+
+        if (!$order) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Order not found',
+            ], 404);
+        }
 
         if ($request->status == 'ready') {
             $order->update([
@@ -120,4 +145,17 @@ class OrderController extends Controller
         ], 200);
     }
 
+    /**
+     * Remove the specified resource from storage.
+     */
+    public function destroy(string $id)
+    {
+        $order = Order::findOrFail($id);
+        $order->delete();
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Order deleted successfully',
+        ], 200);
+    }
 }

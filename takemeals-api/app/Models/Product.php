@@ -11,7 +11,7 @@ class Product extends Model
     use HasFactory, HasFactory, SoftDeletes;
 
     protected $fillable = [
-        'user_id',
+        'partner_id',
         'name',
         'description',
         'type_food',
@@ -23,9 +23,9 @@ class Product extends Model
 
     protected $dates = ['expired'];
 
-    public function user()
+    public function partner()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(Partner::class);
     }
 
     public function orders()

@@ -45,11 +45,10 @@ class User extends Authenticatable
         'password' => 'hashed',
     ];
 
-    public function products()
+    public function partner()
     {
-        return $this->hasMany(Product::class);
+        return $this->hasOne(Partner::class);
     }
-
     public function orders()
     {
         return $this->hasManyThrough(Order::class, Product::class);

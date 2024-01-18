@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Partner;
 use Illuminate\Http\Request;
 use App\Models\Product;
 use App\Models\User;
@@ -28,7 +29,7 @@ class ProductController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'user_id' => 'required',
+            'partner_id' => 'required',
             'name' => 'required',
             'description' => 'required',
             'type_food' => 'required',
@@ -46,9 +47,9 @@ class ProductController extends Controller
             ], 422);
         }
 
-        $user = User::findOrFail($request->user_id);
+        $partner = Partner::findOrFail($request->partner_id);
 
-        if (!$user->is_partner) {
+        if (!$partner->user->is_partner) {
             return response()->json([
                 'success' => false,
                 'message' => 'Unauthorized',
@@ -80,18 +81,9 @@ class ProductController extends Controller
     /**
      * Display the specified resource by user.
      */
-    public function showByUser(string $userId)
+    public function showByPartner(string $partnerId)
     {
-        $user = User::findOrFail($userId);
-
-        if (!$user->is_partner) {
-            return response()->json([
-                'success' => false,
-                'message' => 'Unauthorized',
-            ], 401);
-        }
-
-        $products = Product::where('user_id', $userId)->get();
+        $products = Product::where('partner_id', $partnerId)->get();
 
         return response()->json([
             'success' => true,
@@ -105,7 +97,7 @@ class ProductController extends Controller
     public function update(Request $request, string $id)
     {
         $validator = Validator::make($request->all(), [
-            'user_id' => 'required',
+            'partner_id' => 'required',
             'name' => 'required',
             'description' => 'required',
             'type_food' => 'required',
@@ -123,9 +115,9 @@ class ProductController extends Controller
             ], 422);
         }
 
-        $user = User::findOrFail($request->user_id);
+        $partner = Partner::findOrFail($request->partner_id);
 
-        if (!$user->is_partner) {
+        if (!$partner->user->is_partner) {
             return response()->json([
                 'success' => false,
                 'message' => 'Unauthorized',
