@@ -22,3 +22,9 @@ Our goal in developing this application is because we believe that food waste is
 /products
 /orders
 ```
+
+#### How to run
+1. Clone
+2. Run the Laravel and serve it with NGROK
+3. On the flutter > lib/network/api.dart, change the url base the NGROK
+4. Voila!
