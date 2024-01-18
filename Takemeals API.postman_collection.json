@@ -1,0 +1,845 @@
+{
+	"info": {
+		"_postman_id": "4798ebfe-3097-47be-8cd2-5aefb6016ae1",
+		"name": "Takemeals API",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "29338049"
+	},
+	"item": [
+		{
+			"name": "Login",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "sdasdasdsssssssssssssssssssssssss",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "http://127.0.0.1:8000/api/v1/login/?name=Naufal Zhafif&email=nzpstorage@gmail.com&password=12345678",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"v1",
+						"login",
+						""
+					],
+					"query": [
+						{
+							"key": "name",
+							"value": "Naufal Zhafif"
+						},
+						{
+							"key": "email",
+							"value": "nzpstorage@gmail.com"
+						},
+						{
+							"key": "password",
+							"value": "12345678"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Register",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "http://127.0.0.1:8000/api/v1/register/?name=Naufal Zhafif&email=nzpstorage@gmail.com&password=12345678",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"v1",
+						"register",
+						""
+					],
+					"query": [
+						{
+							"key": "name",
+							"value": "Naufal Zhafif"
+						},
+						{
+							"key": "email",
+							"value": "nzpstorage@gmail.com"
+						},
+						{
+							"key": "password",
+							"value": "12345678"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Logout",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiIxIiwianRpIjoiYmY5MjRhMDgwMzFmM2Q2NmZmNzI2OWYzODA5M2M5YmE2ZTI4ZTliMDhhMmUzMTNmZGFlOTAxMGQxNGJiMjAwYWE3NmI3MmYyMjIxYTg3NjMiLCJpYXQiOjE3MDQ5NjE4MTQuNjA0NTAzLCJuYmYiOjE3MDQ5NjE4MTQuNjA0NTA3LCJleHAiOjE3MzY1ODQyMTQuMjgyNzYzLCJzdWIiOiIxIiwic2NvcGVzIjpbXX0.vmUr1bLigNWfn8ytwhJgv794XyPja5qItJ1cpMnBT0QokdqKpoeG2tMzxfYxjmho7_3uDbOOmYLtnHwLjxahadvzi8BsHMW9dMN55-pEdBBZ4Abm_Xq8F4WqUW7fkWTf59Gr4LVPYfLV1boOCP2rGWdnb7Im9qI9UMUW_DnQW3RDJNKql9HLt1Rss2InOUD0FDPb7ZlkgdDnhFzGtBZezyu7zaD5TaQeeaKEaovX2R7Ynt0CgEylfJH3dNwVhRsvotWRctW-pUka0YH3k0dQWhaz-1-3YUwYsYVeIjIzRlMjwnwS8vcsJ0FSVmD8mRy3brY5oZFIqgpbt0QcLQc3t4FBKcwhP1gR8pTjBH7eaSSn5Ol13-k4-oRCweM7r7aAjpo_p2Tt3eGEtI2iheGDCSy8kk_bYuMNJbzHa5FdDgMAwcYYY913ZnsMxREFBbv_igPHhwLHhTMgRRf3zBgS_Gb0Swr1Ew0YcCS8AkOPkBhlMURWXn1_szO_vudOnaQ_q28gVNfkMAyHZyZRoUWX2Hl_EP05szkGO0FQlYm7lAjaklOWa8xvopk2vRSI1I7xyjmcdhJoHiIm2tXI7gYBiNOQv_eoAI59tZjpebSh-O5NkpWACKiC2MQrkmOZWYaEUqEYzbkuiMsyoFiwQJQBSecpb28LOWVkyjoQPBsFlSk",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "http://127.0.0.1:8000/api/v1/logout",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"v1",
+						"logout"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get All Product",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiIxIiwianRpIjoiMTc3NmE1MDkyZjcyZTZkMTI0NmQzNTRkMTdkZDQwY2M1ZGRiODgyYzAxZjBiMGNjODNkODVjY2U2NGU4MGU4NWI0MmExNTAxMzk5ZTVhMzkiLCJpYXQiOjE3MDU1NjUwMzUuMDcxNTQxLCJuYmYiOjE3MDU1NjUwMzUuMDcxNTQzLCJleHAiOjE3MzcxODc0MzQuOTA2Mzc4LCJzdWIiOiIxIiwic2NvcGVzIjpbXX0.IlTVDfQU6-Z23NQtTXve7mlXtqoktMWVotCsay_AWghrSHRPOClr882Ch1wiw2ulQEnJKFNu6ylBhWL9EG7nT-5hi5_Q_VHekpJPGVSYKXHqEPm2byMzGBGZBVrjbDrpZ3SbpugdMcI4sJkarIKGE_y3PCEU_pRAoL3-oro777ofXEQbWIJ0uNvN15Zht4M1RvAQevEMA9oUiUZjfGBpsWm0jPzF2ltq2COu5NasB6BxfCK_kgclJ8Qa-wwguVnazSdjb0FkHfRZpaCVwhmQ5H2yWpuKlIbGwlofeXF1SmEuXB_S050hQVCrdF2vYPgsDuN5DrBNeHJk1i3LLniAwk2VRTeSJ1dlXPPTZJZ18cSorC6tqtr5HNi_PbojnLKqI095_L9bUEwpJdak2N0AMbWzY4OliPvywmbTGux7bgCIuXAq9FjuoEdtdFQynLaP73_n2UCS4pmYXqi-Hvqu4XDqMwdJ_NdMoQr7dVCkgCyPjYlRm-Aq2_YHXVvSw-x3LF6JiPFa3Pr3g8ESadtZEDy1ojsiovLA1gFNRjmhZSN0DZwJZzAT5a3HRaWxZ_xuO2dVbeINTpTC-S_p4FJokJ1KV-mhUS96476GhzCVUUc5mh64BCAtcomsJ0PRPiEsgKpVOTBG_kS1fU3ND4LIllzGtSyVuuyRdKijLLyEb_I",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://127.0.0.1:8000/api/v1/products",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"v1",
+						"products"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get All Product by Partner",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://127.0.0.1:8000/api/v1/products/partner/1",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"v1",
+						"products",
+						"partner",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Product by ID",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiIxIiwianRpIjoiMTc3NmE1MDkyZjcyZTZkMTI0NmQzNTRkMTdkZDQwY2M1ZGRiODgyYzAxZjBiMGNjODNkODVjY2U2NGU4MGU4NWI0MmExNTAxMzk5ZTVhMzkiLCJpYXQiOjE3MDU1NjUwMzUuMDcxNTQxLCJuYmYiOjE3MDU1NjUwMzUuMDcxNTQzLCJleHAiOjE3MzcxODc0MzQuOTA2Mzc4LCJzdWIiOiIxIiwic2NvcGVzIjpbXX0.IlTVDfQU6-Z23NQtTXve7mlXtqoktMWVotCsay_AWghrSHRPOClr882Ch1wiw2ulQEnJKFNu6ylBhWL9EG7nT-5hi5_Q_VHekpJPGVSYKXHqEPm2byMzGBGZBVrjbDrpZ3SbpugdMcI4sJkarIKGE_y3PCEU_pRAoL3-oro777ofXEQbWIJ0uNvN15Zht4M1RvAQevEMA9oUiUZjfGBpsWm0jPzF2ltq2COu5NasB6BxfCK_kgclJ8Qa-wwguVnazSdjb0FkHfRZpaCVwhmQ5H2yWpuKlIbGwlofeXF1SmEuXB_S050hQVCrdF2vYPgsDuN5DrBNeHJk1i3LLniAwk2VRTeSJ1dlXPPTZJZ18cSorC6tqtr5HNi_PbojnLKqI095_L9bUEwpJdak2N0AMbWzY4OliPvywmbTGux7bgCIuXAq9FjuoEdtdFQynLaP73_n2UCS4pmYXqi-Hvqu4XDqMwdJ_NdMoQr7dVCkgCyPjYlRm-Aq2_YHXVvSw-x3LF6JiPFa3Pr3g8ESadtZEDy1ojsiovLA1gFNRjmhZSN0DZwJZzAT5a3HRaWxZ_xuO2dVbeINTpTC-S_p4FJokJ1KV-mhUS96476GhzCVUUc5mh64BCAtcomsJ0PRPiEsgKpVOTBG_kS1fU3ND4LIllzGtSyVuuyRdKijLLyEb_I",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://127.0.0.1:8000/api/v1/products/1",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"v1",
+						"products",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create Product",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiIxIiwianRpIjoiMTc3NmE1MDkyZjcyZTZkMTI0NmQzNTRkMTdkZDQwY2M1ZGRiODgyYzAxZjBiMGNjODNkODVjY2U2NGU4MGU4NWI0MmExNTAxMzk5ZTVhMzkiLCJpYXQiOjE3MDU1NjUwMzUuMDcxNTQxLCJuYmYiOjE3MDU1NjUwMzUuMDcxNTQzLCJleHAiOjE3MzcxODc0MzQuOTA2Mzc4LCJzdWIiOiIxIiwic2NvcGVzIjpbXX0.IlTVDfQU6-Z23NQtTXve7mlXtqoktMWVotCsay_AWghrSHRPOClr882Ch1wiw2ulQEnJKFNu6ylBhWL9EG7nT-5hi5_Q_VHekpJPGVSYKXHqEPm2byMzGBGZBVrjbDrpZ3SbpugdMcI4sJkarIKGE_y3PCEU_pRAoL3-oro777ofXEQbWIJ0uNvN15Zht4M1RvAQevEMA9oUiUZjfGBpsWm0jPzF2ltq2COu5NasB6BxfCK_kgclJ8Qa-wwguVnazSdjb0FkHfRZpaCVwhmQ5H2yWpuKlIbGwlofeXF1SmEuXB_S050hQVCrdF2vYPgsDuN5DrBNeHJk1i3LLniAwk2VRTeSJ1dlXPPTZJZ18cSorC6tqtr5HNi_PbojnLKqI095_L9bUEwpJdak2N0AMbWzY4OliPvywmbTGux7bgCIuXAq9FjuoEdtdFQynLaP73_n2UCS4pmYXqi-Hvqu4XDqMwdJ_NdMoQr7dVCkgCyPjYlRm-Aq2_YHXVvSw-x3LF6JiPFa3Pr3g8ESadtZEDy1ojsiovLA1gFNRjmhZSN0DZwJZzAT5a3HRaWxZ_xuO2dVbeINTpTC-S_p4FJokJ1KV-mhUS96476GhzCVUUc5mh64BCAtcomsJ0PRPiEsgKpVOTBG_kS1fU3ND4LIllzGtSyVuuyRdKijLLyEb_I",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "http://127.0.0.1:8000/api/v1/products/?partner_id=1&name=Aneh&description=ini adalah makanan berat bang. ini adalah makanan berat bang. ini adalah makanan berat bang. &type_food=Makanan Berat&price=15000&image=https://via.placeholder.com/640x480.png/00ddbb?text=food+berat&stock=5&expired=6",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"v1",
+						"products",
+						""
+					],
+					"query": [
+						{
+							"key": "partner_id",
+							"value": "1"
+						},
+						{
+							"key": "name",
+							"value": "Aneh"
+						},
+						{
+							"key": "description",
+							"value": "ini adalah makanan berat bang. ini adalah makanan berat bang. ini adalah makanan berat bang. "
+						},
+						{
+							"key": "type_food",
+							"value": "Makanan Berat"
+						},
+						{
+							"key": "price",
+							"value": "15000"
+						},
+						{
+							"key": "image",
+							"value": "https://via.placeholder.com/640x480.png/00ddbb?text=food+berat"
+						},
+						{
+							"key": "stock",
+							"value": "5"
+						},
+						{
+							"key": "expired",
+							"value": "6"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update Product",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiIxIiwianRpIjoiMTc3NmE1MDkyZjcyZTZkMTI0NmQzNTRkMTdkZDQwY2M1ZGRiODgyYzAxZjBiMGNjODNkODVjY2U2NGU4MGU4NWI0MmExNTAxMzk5ZTVhMzkiLCJpYXQiOjE3MDU1NjUwMzUuMDcxNTQxLCJuYmYiOjE3MDU1NjUwMzUuMDcxNTQzLCJleHAiOjE3MzcxODc0MzQuOTA2Mzc4LCJzdWIiOiIxIiwic2NvcGVzIjpbXX0.IlTVDfQU6-Z23NQtTXve7mlXtqoktMWVotCsay_AWghrSHRPOClr882Ch1wiw2ulQEnJKFNu6ylBhWL9EG7nT-5hi5_Q_VHekpJPGVSYKXHqEPm2byMzGBGZBVrjbDrpZ3SbpugdMcI4sJkarIKGE_y3PCEU_pRAoL3-oro777ofXEQbWIJ0uNvN15Zht4M1RvAQevEMA9oUiUZjfGBpsWm0jPzF2ltq2COu5NasB6BxfCK_kgclJ8Qa-wwguVnazSdjb0FkHfRZpaCVwhmQ5H2yWpuKlIbGwlofeXF1SmEuXB_S050hQVCrdF2vYPgsDuN5DrBNeHJk1i3LLniAwk2VRTeSJ1dlXPPTZJZ18cSorC6tqtr5HNi_PbojnLKqI095_L9bUEwpJdak2N0AMbWzY4OliPvywmbTGux7bgCIuXAq9FjuoEdtdFQynLaP73_n2UCS4pmYXqi-Hvqu4XDqMwdJ_NdMoQr7dVCkgCyPjYlRm-Aq2_YHXVvSw-x3LF6JiPFa3Pr3g8ESadtZEDy1ojsiovLA1gFNRjmhZSN0DZwJZzAT5a3HRaWxZ_xuO2dVbeINTpTC-S_p4FJokJ1KV-mhUS96476GhzCVUUc5mh64BCAtcomsJ0PRPiEsgKpVOTBG_kS1fU3ND4LIllzGtSyVuuyRdKijLLyEb_I",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [],
+				"url": {
+					"raw": "http://127.0.0.1:8000/api/v1/products/2/?partner_id=1&name=Aneh test 2&description=ini adalah makanan berat bang. ini adalah makanan berat bang. ini adalah makanan berat bang. &type_food=Makanan Berat&price=15000&image=https://via.placeholder.com/640x480.png/00ddbb?text=food+berat&stock=5&expired=6",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"v1",
+						"products",
+						"2",
+						""
+					],
+					"query": [
+						{
+							"key": "partner_id",
+							"value": "1"
+						},
+						{
+							"key": "name",
+							"value": "Aneh test 2"
+						},
+						{
+							"key": "description",
+							"value": "ini adalah makanan berat bang. ini adalah makanan berat bang. ini adalah makanan berat bang. "
+						},
+						{
+							"key": "type_food",
+							"value": "Makanan Berat"
+						},
+						{
+							"key": "price",
+							"value": "15000"
+						},
+						{
+							"key": "image",
+							"value": "https://via.placeholder.com/640x480.png/00ddbb?text=food+berat"
+						},
+						{
+							"key": "stock",
+							"value": "5"
+						},
+						{
+							"key": "expired",
+							"value": "6"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Product",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiIxIiwianRpIjoiMTc3NmE1MDkyZjcyZTZkMTI0NmQzNTRkMTdkZDQwY2M1ZGRiODgyYzAxZjBiMGNjODNkODVjY2U2NGU4MGU4NWI0MmExNTAxMzk5ZTVhMzkiLCJpYXQiOjE3MDU1NjUwMzUuMDcxNTQxLCJuYmYiOjE3MDU1NjUwMzUuMDcxNTQzLCJleHAiOjE3MzcxODc0MzQuOTA2Mzc4LCJzdWIiOiIxIiwic2NvcGVzIjpbXX0.IlTVDfQU6-Z23NQtTXve7mlXtqoktMWVotCsay_AWghrSHRPOClr882Ch1wiw2ulQEnJKFNu6ylBhWL9EG7nT-5hi5_Q_VHekpJPGVSYKXHqEPm2byMzGBGZBVrjbDrpZ3SbpugdMcI4sJkarIKGE_y3PCEU_pRAoL3-oro777ofXEQbWIJ0uNvN15Zht4M1RvAQevEMA9oUiUZjfGBpsWm0jPzF2ltq2COu5NasB6BxfCK_kgclJ8Qa-wwguVnazSdjb0FkHfRZpaCVwhmQ5H2yWpuKlIbGwlofeXF1SmEuXB_S050hQVCrdF2vYPgsDuN5DrBNeHJk1i3LLniAwk2VRTeSJ1dlXPPTZJZ18cSorC6tqtr5HNi_PbojnLKqI095_L9bUEwpJdak2N0AMbWzY4OliPvywmbTGux7bgCIuXAq9FjuoEdtdFQynLaP73_n2UCS4pmYXqi-Hvqu4XDqMwdJ_NdMoQr7dVCkgCyPjYlRm-Aq2_YHXVvSw-x3LF6JiPFa3Pr3g8ESadtZEDy1ojsiovLA1gFNRjmhZSN0DZwJZzAT5a3HRaWxZ_xuO2dVbeINTpTC-S_p4FJokJ1KV-mhUS96476GhzCVUUc5mh64BCAtcomsJ0PRPiEsgKpVOTBG_kS1fU3ND4LIllzGtSyVuuyRdKijLLyEb_I",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://127.0.0.1:8000/api/v1/products/13",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"v1",
+						"products",
+						"13"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get All Partner",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiIxIiwianRpIjoiMTc3NmE1MDkyZjcyZTZkMTI0NmQzNTRkMTdkZDQwY2M1ZGRiODgyYzAxZjBiMGNjODNkODVjY2U2NGU4MGU4NWI0MmExNTAxMzk5ZTVhMzkiLCJpYXQiOjE3MDU1NjUwMzUuMDcxNTQxLCJuYmYiOjE3MDU1NjUwMzUuMDcxNTQzLCJleHAiOjE3MzcxODc0MzQuOTA2Mzc4LCJzdWIiOiIxIiwic2NvcGVzIjpbXX0.IlTVDfQU6-Z23NQtTXve7mlXtqoktMWVotCsay_AWghrSHRPOClr882Ch1wiw2ulQEnJKFNu6ylBhWL9EG7nT-5hi5_Q_VHekpJPGVSYKXHqEPm2byMzGBGZBVrjbDrpZ3SbpugdMcI4sJkarIKGE_y3PCEU_pRAoL3-oro777ofXEQbWIJ0uNvN15Zht4M1RvAQevEMA9oUiUZjfGBpsWm0jPzF2ltq2COu5NasB6BxfCK_kgclJ8Qa-wwguVnazSdjb0FkHfRZpaCVwhmQ5H2yWpuKlIbGwlofeXF1SmEuXB_S050hQVCrdF2vYPgsDuN5DrBNeHJk1i3LLniAwk2VRTeSJ1dlXPPTZJZ18cSorC6tqtr5HNi_PbojnLKqI095_L9bUEwpJdak2N0AMbWzY4OliPvywmbTGux7bgCIuXAq9FjuoEdtdFQynLaP73_n2UCS4pmYXqi-Hvqu4XDqMwdJ_NdMoQr7dVCkgCyPjYlRm-Aq2_YHXVvSw-x3LF6JiPFa3Pr3g8ESadtZEDy1ojsiovLA1gFNRjmhZSN0DZwJZzAT5a3HRaWxZ_xuO2dVbeINTpTC-S_p4FJokJ1KV-mhUS96476GhzCVUUc5mh64BCAtcomsJ0PRPiEsgKpVOTBG_kS1fU3ND4LIllzGtSyVuuyRdKijLLyEb_I",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://127.0.0.1:8000/api/v1/partners",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"v1",
+						"partners"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Partner by ID",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiIxIiwianRpIjoiMTc3NmE1MDkyZjcyZTZkMTI0NmQzNTRkMTdkZDQwY2M1ZGRiODgyYzAxZjBiMGNjODNkODVjY2U2NGU4MGU4NWI0MmExNTAxMzk5ZTVhMzkiLCJpYXQiOjE3MDU1NjUwMzUuMDcxNTQxLCJuYmYiOjE3MDU1NjUwMzUuMDcxNTQzLCJleHAiOjE3MzcxODc0MzQuOTA2Mzc4LCJzdWIiOiIxIiwic2NvcGVzIjpbXX0.IlTVDfQU6-Z23NQtTXve7mlXtqoktMWVotCsay_AWghrSHRPOClr882Ch1wiw2ulQEnJKFNu6ylBhWL9EG7nT-5hi5_Q_VHekpJPGVSYKXHqEPm2byMzGBGZBVrjbDrpZ3SbpugdMcI4sJkarIKGE_y3PCEU_pRAoL3-oro777ofXEQbWIJ0uNvN15Zht4M1RvAQevEMA9oUiUZjfGBpsWm0jPzF2ltq2COu5NasB6BxfCK_kgclJ8Qa-wwguVnazSdjb0FkHfRZpaCVwhmQ5H2yWpuKlIbGwlofeXF1SmEuXB_S050hQVCrdF2vYPgsDuN5DrBNeHJk1i3LLniAwk2VRTeSJ1dlXPPTZJZ18cSorC6tqtr5HNi_PbojnLKqI095_L9bUEwpJdak2N0AMbWzY4OliPvywmbTGux7bgCIuXAq9FjuoEdtdFQynLaP73_n2UCS4pmYXqi-Hvqu4XDqMwdJ_NdMoQr7dVCkgCyPjYlRm-Aq2_YHXVvSw-x3LF6JiPFa3Pr3g8ESadtZEDy1ojsiovLA1gFNRjmhZSN0DZwJZzAT5a3HRaWxZ_xuO2dVbeINTpTC-S_p4FJokJ1KV-mhUS96476GhzCVUUc5mh64BCAtcomsJ0PRPiEsgKpVOTBG_kS1fU3ND4LIllzGtSyVuuyRdKijLLyEb_I",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://127.0.0.1:8000/api/v1/partners/1",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"v1",
+						"partners",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create Partner",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiIxIiwianRpIjoiMTc3NmE1MDkyZjcyZTZkMTI0NmQzNTRkMTdkZDQwY2M1ZGRiODgyYzAxZjBiMGNjODNkODVjY2U2NGU4MGU4NWI0MmExNTAxMzk5ZTVhMzkiLCJpYXQiOjE3MDU1NjUwMzUuMDcxNTQxLCJuYmYiOjE3MDU1NjUwMzUuMDcxNTQzLCJleHAiOjE3MzcxODc0MzQuOTA2Mzc4LCJzdWIiOiIxIiwic2NvcGVzIjpbXX0.IlTVDfQU6-Z23NQtTXve7mlXtqoktMWVotCsay_AWghrSHRPOClr882Ch1wiw2ulQEnJKFNu6ylBhWL9EG7nT-5hi5_Q_VHekpJPGVSYKXHqEPm2byMzGBGZBVrjbDrpZ3SbpugdMcI4sJkarIKGE_y3PCEU_pRAoL3-oro777ofXEQbWIJ0uNvN15Zht4M1RvAQevEMA9oUiUZjfGBpsWm0jPzF2ltq2COu5NasB6BxfCK_kgclJ8Qa-wwguVnazSdjb0FkHfRZpaCVwhmQ5H2yWpuKlIbGwlofeXF1SmEuXB_S050hQVCrdF2vYPgsDuN5DrBNeHJk1i3LLniAwk2VRTeSJ1dlXPPTZJZ18cSorC6tqtr5HNi_PbojnLKqI095_L9bUEwpJdak2N0AMbWzY4OliPvywmbTGux7bgCIuXAq9FjuoEdtdFQynLaP73_n2UCS4pmYXqi-Hvqu4XDqMwdJ_NdMoQr7dVCkgCyPjYlRm-Aq2_YHXVvSw-x3LF6JiPFa3Pr3g8ESadtZEDy1ojsiovLA1gFNRjmhZSN0DZwJZzAT5a3HRaWxZ_xuO2dVbeINTpTC-S_p4FJokJ1KV-mhUS96476GhzCVUUc5mh64BCAtcomsJ0PRPiEsgKpVOTBG_kS1fU3ND4LIllzGtSyVuuyRdKijLLyEb_I",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "http://127.0.0.1:8000/api/v1/partners/?user_id=2&store_name=Icikiwir&address=Jl Mars Raya, Bimasakti, Universe&city=Semarang&province=Jawa Tengah&open_at=18:00:00&close_at=21:00:00&latitude=-6.989093&longitude=110.422318",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"v1",
+						"partners",
+						""
+					],
+					"query": [
+						{
+							"key": "user_id",
+							"value": "2"
+						},
+						{
+							"key": "store_name",
+							"value": "Icikiwir"
+						},
+						{
+							"key": "address",
+							"value": "Jl Mars Raya, Bimasakti, Universe"
+						},
+						{
+							"key": "city",
+							"value": "Semarang"
+						},
+						{
+							"key": "province",
+							"value": "Jawa Tengah"
+						},
+						{
+							"key": "open_at",
+							"value": "18:00:00"
+						},
+						{
+							"key": "close_at",
+							"value": "21:00:00"
+						},
+						{
+							"key": "latitude",
+							"value": "-6.989093"
+						},
+						{
+							"key": "longitude",
+							"value": "110.422318"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update Partner",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiIxIiwianRpIjoiMTc3NmE1MDkyZjcyZTZkMTI0NmQzNTRkMTdkZDQwY2M1ZGRiODgyYzAxZjBiMGNjODNkODVjY2U2NGU4MGU4NWI0MmExNTAxMzk5ZTVhMzkiLCJpYXQiOjE3MDU1NjUwMzUuMDcxNTQxLCJuYmYiOjE3MDU1NjUwMzUuMDcxNTQzLCJleHAiOjE3MzcxODc0MzQuOTA2Mzc4LCJzdWIiOiIxIiwic2NvcGVzIjpbXX0.IlTVDfQU6-Z23NQtTXve7mlXtqoktMWVotCsay_AWghrSHRPOClr882Ch1wiw2ulQEnJKFNu6ylBhWL9EG7nT-5hi5_Q_VHekpJPGVSYKXHqEPm2byMzGBGZBVrjbDrpZ3SbpugdMcI4sJkarIKGE_y3PCEU_pRAoL3-oro777ofXEQbWIJ0uNvN15Zht4M1RvAQevEMA9oUiUZjfGBpsWm0jPzF2ltq2COu5NasB6BxfCK_kgclJ8Qa-wwguVnazSdjb0FkHfRZpaCVwhmQ5H2yWpuKlIbGwlofeXF1SmEuXB_S050hQVCrdF2vYPgsDuN5DrBNeHJk1i3LLniAwk2VRTeSJ1dlXPPTZJZ18cSorC6tqtr5HNi_PbojnLKqI095_L9bUEwpJdak2N0AMbWzY4OliPvywmbTGux7bgCIuXAq9FjuoEdtdFQynLaP73_n2UCS4pmYXqi-Hvqu4XDqMwdJ_NdMoQr7dVCkgCyPjYlRm-Aq2_YHXVvSw-x3LF6JiPFa3Pr3g8ESadtZEDy1ojsiovLA1gFNRjmhZSN0DZwJZzAT5a3HRaWxZ_xuO2dVbeINTpTC-S_p4FJokJ1KV-mhUS96476GhzCVUUc5mh64BCAtcomsJ0PRPiEsgKpVOTBG_kS1fU3ND4LIllzGtSyVuuyRdKijLLyEb_I",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [],
+				"url": {
+					"raw": "http://127.0.0.1:8000/api/v1/partners/2/?user_id=2&store_name=Icikiwir Test&address=Jl Mars Raya, Bimasakti, Universe&city=Semarang&province=Jawa Tengah&open_at=18:00:00&close_at=21:00:00&latitude=-6.989093&longitude=110.422318",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"v1",
+						"partners",
+						"2",
+						""
+					],
+					"query": [
+						{
+							"key": "user_id",
+							"value": "2"
+						},
+						{
+							"key": "store_name",
+							"value": "Icikiwir Test"
+						},
+						{
+							"key": "address",
+							"value": "Jl Mars Raya, Bimasakti, Universe"
+						},
+						{
+							"key": "city",
+							"value": "Semarang"
+						},
+						{
+							"key": "province",
+							"value": "Jawa Tengah"
+						},
+						{
+							"key": "open_at",
+							"value": "18:00:00"
+						},
+						{
+							"key": "close_at",
+							"value": "21:00:00"
+						},
+						{
+							"key": "latitude",
+							"value": "-6.989093"
+						},
+						{
+							"key": "longitude",
+							"value": "110.422318"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Partner",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiIxIiwianRpIjoiMTc3NmE1MDkyZjcyZTZkMTI0NmQzNTRkMTdkZDQwY2M1ZGRiODgyYzAxZjBiMGNjODNkODVjY2U2NGU4MGU4NWI0MmExNTAxMzk5ZTVhMzkiLCJpYXQiOjE3MDU1NjUwMzUuMDcxNTQxLCJuYmYiOjE3MDU1NjUwMzUuMDcxNTQzLCJleHAiOjE3MzcxODc0MzQuOTA2Mzc4LCJzdWIiOiIxIiwic2NvcGVzIjpbXX0.IlTVDfQU6-Z23NQtTXve7mlXtqoktMWVotCsay_AWghrSHRPOClr882Ch1wiw2ulQEnJKFNu6ylBhWL9EG7nT-5hi5_Q_VHekpJPGVSYKXHqEPm2byMzGBGZBVrjbDrpZ3SbpugdMcI4sJkarIKGE_y3PCEU_pRAoL3-oro777ofXEQbWIJ0uNvN15Zht4M1RvAQevEMA9oUiUZjfGBpsWm0jPzF2ltq2COu5NasB6BxfCK_kgclJ8Qa-wwguVnazSdjb0FkHfRZpaCVwhmQ5H2yWpuKlIbGwlofeXF1SmEuXB_S050hQVCrdF2vYPgsDuN5DrBNeHJk1i3LLniAwk2VRTeSJ1dlXPPTZJZ18cSorC6tqtr5HNi_PbojnLKqI095_L9bUEwpJdak2N0AMbWzY4OliPvywmbTGux7bgCIuXAq9FjuoEdtdFQynLaP73_n2UCS4pmYXqi-Hvqu4XDqMwdJ_NdMoQr7dVCkgCyPjYlRm-Aq2_YHXVvSw-x3LF6JiPFa3Pr3g8ESadtZEDy1ojsiovLA1gFNRjmhZSN0DZwJZzAT5a3HRaWxZ_xuO2dVbeINTpTC-S_p4FJokJ1KV-mhUS96476GhzCVUUc5mh64BCAtcomsJ0PRPiEsgKpVOTBG_kS1fU3ND4LIllzGtSyVuuyRdKijLLyEb_I",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://127.0.0.1:8000/api/v1/partners/2",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"v1",
+						"partners",
+						"2"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create Order",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiIxIiwianRpIjoiMTc3NmE1MDkyZjcyZTZkMTI0NmQzNTRkMTdkZDQwY2M1ZGRiODgyYzAxZjBiMGNjODNkODVjY2U2NGU4MGU4NWI0MmExNTAxMzk5ZTVhMzkiLCJpYXQiOjE3MDU1NjUwMzUuMDcxNTQxLCJuYmYiOjE3MDU1NjUwMzUuMDcxNTQzLCJleHAiOjE3MzcxODc0MzQuOTA2Mzc4LCJzdWIiOiIxIiwic2NvcGVzIjpbXX0.IlTVDfQU6-Z23NQtTXve7mlXtqoktMWVotCsay_AWghrSHRPOClr882Ch1wiw2ulQEnJKFNu6ylBhWL9EG7nT-5hi5_Q_VHekpJPGVSYKXHqEPm2byMzGBGZBVrjbDrpZ3SbpugdMcI4sJkarIKGE_y3PCEU_pRAoL3-oro777ofXEQbWIJ0uNvN15Zht4M1RvAQevEMA9oUiUZjfGBpsWm0jPzF2ltq2COu5NasB6BxfCK_kgclJ8Qa-wwguVnazSdjb0FkHfRZpaCVwhmQ5H2yWpuKlIbGwlofeXF1SmEuXB_S050hQVCrdF2vYPgsDuN5DrBNeHJk1i3LLniAwk2VRTeSJ1dlXPPTZJZ18cSorC6tqtr5HNi_PbojnLKqI095_L9bUEwpJdak2N0AMbWzY4OliPvywmbTGux7bgCIuXAq9FjuoEdtdFQynLaP73_n2UCS4pmYXqi-Hvqu4XDqMwdJ_NdMoQr7dVCkgCyPjYlRm-Aq2_YHXVvSw-x3LF6JiPFa3Pr3g8ESadtZEDy1ojsiovLA1gFNRjmhZSN0DZwJZzAT5a3HRaWxZ_xuO2dVbeINTpTC-S_p4FJokJ1KV-mhUS96476GhzCVUUc5mh64BCAtcomsJ0PRPiEsgKpVOTBG_kS1fU3ND4LIllzGtSyVuuyRdKijLLyEb_I",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "http://127.0.0.1:8000/api/v1/orders?user_id=1&product_id=2&quantity=2&total_price=30000&payment_method=QRIS",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"v1",
+						"orders"
+					],
+					"query": [
+						{
+							"key": "user_id",
+							"value": "1"
+						},
+						{
+							"key": "product_id",
+							"value": "2"
+						},
+						{
+							"key": "quantity",
+							"value": "2"
+						},
+						{
+							"key": "status",
+							"value": "pending",
+							"disabled": true
+						},
+						{
+							"key": "total_price",
+							"value": "30000"
+						},
+						{
+							"key": "payment_method",
+							"value": "QRIS"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Order",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiIxIiwianRpIjoiMTc3NmE1MDkyZjcyZTZkMTI0NmQzNTRkMTdkZDQwY2M1ZGRiODgyYzAxZjBiMGNjODNkODVjY2U2NGU4MGU4NWI0MmExNTAxMzk5ZTVhMzkiLCJpYXQiOjE3MDU1NjUwMzUuMDcxNTQxLCJuYmYiOjE3MDU1NjUwMzUuMDcxNTQzLCJleHAiOjE3MzcxODc0MzQuOTA2Mzc4LCJzdWIiOiIxIiwic2NvcGVzIjpbXX0.IlTVDfQU6-Z23NQtTXve7mlXtqoktMWVotCsay_AWghrSHRPOClr882Ch1wiw2ulQEnJKFNu6ylBhWL9EG7nT-5hi5_Q_VHekpJPGVSYKXHqEPm2byMzGBGZBVrjbDrpZ3SbpugdMcI4sJkarIKGE_y3PCEU_pRAoL3-oro777ofXEQbWIJ0uNvN15Zht4M1RvAQevEMA9oUiUZjfGBpsWm0jPzF2ltq2COu5NasB6BxfCK_kgclJ8Qa-wwguVnazSdjb0FkHfRZpaCVwhmQ5H2yWpuKlIbGwlofeXF1SmEuXB_S050hQVCrdF2vYPgsDuN5DrBNeHJk1i3LLniAwk2VRTeSJ1dlXPPTZJZ18cSorC6tqtr5HNi_PbojnLKqI095_L9bUEwpJdak2N0AMbWzY4OliPvywmbTGux7bgCIuXAq9FjuoEdtdFQynLaP73_n2UCS4pmYXqi-Hvqu4XDqMwdJ_NdMoQr7dVCkgCyPjYlRm-Aq2_YHXVvSw-x3LF6JiPFa3Pr3g8ESadtZEDy1ojsiovLA1gFNRjmhZSN0DZwJZzAT5a3HRaWxZ_xuO2dVbeINTpTC-S_p4FJokJ1KV-mhUS96476GhzCVUUc5mh64BCAtcomsJ0PRPiEsgKpVOTBG_kS1fU3ND4LIllzGtSyVuuyRdKijLLyEb_I",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://127.0.0.1:8000/api/v1/orders/4",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"v1",
+						"orders",
+						"4"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update Order",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiIxIiwianRpIjoiMTc3NmE1MDkyZjcyZTZkMTI0NmQzNTRkMTdkZDQwY2M1ZGRiODgyYzAxZjBiMGNjODNkODVjY2U2NGU4MGU4NWI0MmExNTAxMzk5ZTVhMzkiLCJpYXQiOjE3MDU1NjUwMzUuMDcxNTQxLCJuYmYiOjE3MDU1NjUwMzUuMDcxNTQzLCJleHAiOjE3MzcxODc0MzQuOTA2Mzc4LCJzdWIiOiIxIiwic2NvcGVzIjpbXX0.IlTVDfQU6-Z23NQtTXve7mlXtqoktMWVotCsay_AWghrSHRPOClr882Ch1wiw2ulQEnJKFNu6ylBhWL9EG7nT-5hi5_Q_VHekpJPGVSYKXHqEPm2byMzGBGZBVrjbDrpZ3SbpugdMcI4sJkarIKGE_y3PCEU_pRAoL3-oro777ofXEQbWIJ0uNvN15Zht4M1RvAQevEMA9oUiUZjfGBpsWm0jPzF2ltq2COu5NasB6BxfCK_kgclJ8Qa-wwguVnazSdjb0FkHfRZpaCVwhmQ5H2yWpuKlIbGwlofeXF1SmEuXB_S050hQVCrdF2vYPgsDuN5DrBNeHJk1i3LLniAwk2VRTeSJ1dlXPPTZJZ18cSorC6tqtr5HNi_PbojnLKqI095_L9bUEwpJdak2N0AMbWzY4OliPvywmbTGux7bgCIuXAq9FjuoEdtdFQynLaP73_n2UCS4pmYXqi-Hvqu4XDqMwdJ_NdMoQr7dVCkgCyPjYlRm-Aq2_YHXVvSw-x3LF6JiPFa3Pr3g8ESadtZEDy1ojsiovLA1gFNRjmhZSN0DZwJZzAT5a3HRaWxZ_xuO2dVbeINTpTC-S_p4FJokJ1KV-mhUS96476GhzCVUUc5mh64BCAtcomsJ0PRPiEsgKpVOTBG_kS1fU3ND4LIllzGtSyVuuyRdKijLLyEb_I",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [],
+				"url": {
+					"raw": "http://127.0.0.1:8000/api/v1/orders/5/?user_id=1&product_id=2&quantity=2&status=ready&total_price=30000&payment_method=QRIS",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"v1",
+						"orders",
+						"5",
+						""
+					],
+					"query": [
+						{
+							"key": "user_id",
+							"value": "1"
+						},
+						{
+							"key": "product_id",
+							"value": "2"
+						},
+						{
+							"key": "quantity",
+							"value": "2"
+						},
+						{
+							"key": "status",
+							"value": "ready"
+						},
+						{
+							"key": "total_price",
+							"value": "30000"
+						},
+						{
+							"key": "payment_method",
+							"value": "QRIS"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Order by User",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiIxIiwianRpIjoiMTc3NmE1MDkyZjcyZTZkMTI0NmQzNTRkMTdkZDQwY2M1ZGRiODgyYzAxZjBiMGNjODNkODVjY2U2NGU4MGU4NWI0MmExNTAxMzk5ZTVhMzkiLCJpYXQiOjE3MDU1NjUwMzUuMDcxNTQxLCJuYmYiOjE3MDU1NjUwMzUuMDcxNTQzLCJleHAiOjE3MzcxODc0MzQuOTA2Mzc4LCJzdWIiOiIxIiwic2NvcGVzIjpbXX0.IlTVDfQU6-Z23NQtTXve7mlXtqoktMWVotCsay_AWghrSHRPOClr882Ch1wiw2ulQEnJKFNu6ylBhWL9EG7nT-5hi5_Q_VHekpJPGVSYKXHqEPm2byMzGBGZBVrjbDrpZ3SbpugdMcI4sJkarIKGE_y3PCEU_pRAoL3-oro777ofXEQbWIJ0uNvN15Zht4M1RvAQevEMA9oUiUZjfGBpsWm0jPzF2ltq2COu5NasB6BxfCK_kgclJ8Qa-wwguVnazSdjb0FkHfRZpaCVwhmQ5H2yWpuKlIbGwlofeXF1SmEuXB_S050hQVCrdF2vYPgsDuN5DrBNeHJk1i3LLniAwk2VRTeSJ1dlXPPTZJZ18cSorC6tqtr5HNi_PbojnLKqI095_L9bUEwpJdak2N0AMbWzY4OliPvywmbTGux7bgCIuXAq9FjuoEdtdFQynLaP73_n2UCS4pmYXqi-Hvqu4XDqMwdJ_NdMoQr7dVCkgCyPjYlRm-Aq2_YHXVvSw-x3LF6JiPFa3Pr3g8ESadtZEDy1ojsiovLA1gFNRjmhZSN0DZwJZzAT5a3HRaWxZ_xuO2dVbeINTpTC-S_p4FJokJ1KV-mhUS96476GhzCVUUc5mh64BCAtcomsJ0PRPiEsgKpVOTBG_kS1fU3ND4LIllzGtSyVuuyRdKijLLyEb_I",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://127.0.0.1:8000/api/v1/orders/1",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"v1",
+						"orders",
+						"1"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
